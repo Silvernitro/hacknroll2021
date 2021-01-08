@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "../../styles/Signup.module.css";
 import Link from "next/link";
 import gql from "graphql-tag";
@@ -9,22 +9,10 @@ import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 
 const SIGNUP_CUSTOMER = gql`
-  mutation CreateCustomer(
-    $name: String!
-    $email: String!
-    $password: String!
-    $phone: String!
-    $location: String!
-  ) {
-    createCustomer(
-      name: $name
-      email: $email
-      password: $password
-      phone: $phone
-    ) {
+  mutation CreateCustomer($customerInput: CustomerInput) {
+    createCustomer(customerInput: $customerInput) {
       name
       email
-      password
       phone
     }
   }
@@ -32,11 +20,26 @@ const SIGNUP_CUSTOMER = gql`
 
 const Signup = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const [addCustomer] = useMutation(SIGNUP_CUSTOMER);
+  const [createCustomer] = useMutation(SIGNUP_CUSTOMER);
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    await addCustomer({ variables: data });
+  const onSubmit = (data) => {
+    const { date, email, name, number, password, phone } = data;
+
+    const formData = {
+      name,
+      email,
+      password,
+      phone,
+      card: {
+        name,
+        number,
+        date,
+      },
+    };
+
+    createCustomer({ variables: { customerInput: formData } }).then((res) =>
+      console.log(res)
+    );
   };
 
   return (
@@ -83,18 +86,18 @@ const Signup = (props) => {
             {errors.password && <p>This field is required</p>}
           </div>
           <p className={styles.smallTitle}>Card Details</p>
-          <div className={styles.inputContainer}>
+          {/* <div className={styles.inputContainer}>
             <input
               className={styles.input}
               name="name"
               placeholder="Card Holder Name"
               ref={register}
             />
-          </div>
+          </div> */}
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
-              name="cardNumber"
+              name="number"
               autocomplete="nope"
               placeholder="Card Number"
               ref={register}
@@ -103,7 +106,7 @@ const Signup = (props) => {
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
-              name="expiry"
+              name="date"
               autocomplete="nope"
               placeholder="Expiry Date"
               ref={register}

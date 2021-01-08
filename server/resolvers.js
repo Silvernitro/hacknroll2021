@@ -29,13 +29,26 @@ module.exports = {
         console.log(error);
       }
     },
-    createClaim: async(_, { claimInput }, { dataSources }) => {
+    createClaim: async (_, { claimInput }, { dataSources }) => {
       try {
-        const claim = await dataSources.claimAPI.createClaim(claimInput);
-        return dataSources.restaurantAPI.addClaimToRestaurant(claim)
-          .then(() => dataSources.claimAPI.claimReducer(claim));
+        const claim = await dataSources.claimAPI.createClaim(claimInput)
+          .then(doc => dataSources.claimAPI.claimReducer(doc));
+        return dataSources.restaurantAPI.addClaimToRestaurant(claim, claimInput.restaurant_id)
+          .then(() => claim);
       } catch (error) {
         console.log(error);
+      }
+    },
+    addMenuItem: async (_, { menuInput }, { dataSources }) => {
+      try {
+        const { restaurant_id, items } = menuInput;
+        return dataSources.restaurantAPI.addMenuItemsToRestaurant(restaurant_id, items)
+          .then(doc => ({
+            menu: doc.menu,
+            restaurant_id: doc._id
+          }));
+      } catch (err) {
+        console.log(err);
       }
     }
   }
