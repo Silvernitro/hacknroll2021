@@ -1,5 +1,5 @@
 .root {
-    --primary: #fff;
+    --primary: rgb(243, 140, 4);
   }
   
   .btn {
@@ -11,26 +11,30 @@
   }
   
   .btnPrimary {
-    background-color: var(--primary);
+    background-color: #4D7A33;
     color: #ffffff;
     border: 1px solid var(--primary);
     font-size: 20px;
+    border-radius: 2px;
+    padding: 8px 20px
   }
   
-  .btn--outline {
+  .btnOutline {
     background-color: transparent;
-    color: #fff;
+    color: rgb(0, 0, 0);
     padding: 8px 20px;
-    border: 1px solid var(--primary);
+    border: 1px solid #4D7A33;
     transition: all 0.3s ease-out;
+    border-radius: 2px;
+    font-size: 20px;
   }
   
-  .btn--medium {
+  .btnMedium {
     padding: 8px 20px;
     font-size: 20px;
   }
   
-  .btn--large {
+  .btnLarge {
     padding: 12px 26px;
     font-size: 20px;
   }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '../Button/Button';
+import { ButtonPrimary } from '../Button/ButtonPrimary';
 import style from './Navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { config, library } from '@fortawesome/fontawesome-svg-core';
@@ -50,7 +50,7 @@ function Navbar() {
               </div>
             </li>
           </ul>
-          {button && <Button buttonStyle='style.btn--outline'>Contact</Button>}
+          {button && <ButtonPrimary buttonStyle='style.btn--outline'>Contact</ButtonPrimary>}
         </div>
       </nav>
     </>
