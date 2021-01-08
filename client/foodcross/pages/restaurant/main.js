@@ -3,6 +3,7 @@ import styles from "../../styles/RestaurantMain.module.css";
 
 import Link from "next/link";
 
+import { gql, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import QRCode from "qrcode.react";
 
@@ -12,7 +13,15 @@ import Navbar from "components/Navbar/NavbarRestaurant";
 import Modal from "components/Modal/Modal";
 import { ButtonOutline } from "components/Button/ButtonOutline";
 
+const ID = gql`
+  query Id {
+    id @client
+  }
+`;
+
 function main() {
+  const { data } = useQuery(ID);
+  console.log(data);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   const [click, setClick] = useState(false);

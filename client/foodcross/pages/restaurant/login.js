@@ -1,5 +1,10 @@
 import React from "react";
 import styles from "../../styles/Login.module.css";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import { isLoggedInVar, idVar } from "../../cache";
+
+import Router from "next/router";
 
 import Link from "next/link";
 
@@ -7,9 +12,31 @@ import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 
+const LOGIN_RESTAURANT = gql`
+  mutation LoginRestaurant($userInput: UserInput) {
+    login(userInput: $userInput) {
+      id
+      token
+    }
+  }
+`;
+
 const Login = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const [loginRestaurant] = useMutation(LOGIN_RESTAURANT);
+
+  const onSubmit = (data) => {
+    data.role = "RESTAURANT";
+
+    loginRestaurant({ variables: { userInput: data } }).then((res) => {
+      localStorage.setItem("token", res.data.login.token);
+      localStorage.setItem("userId", res.data.login.id);
+      isLoggedInVar(true);
+      idVar(res.data.login.id);
+      Router.push("/restaurant/main");
+    });
+  };
 
   return (
     <div className={styles.background}>
