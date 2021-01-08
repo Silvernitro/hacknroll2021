@@ -146,6 +146,7 @@ const typeDefs = gql`
   }
 
   type Item {
+    id: String
     price: Float!
     name: String!
   }

@@ -4,6 +4,7 @@ import styles from "../../styles/RestaurantMain.module.css";
 import Link from "next/link";
 
 import { gql, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "react-hook-form";
 import QRCode from "qrcode.react";
 
@@ -28,6 +29,7 @@ const GET_RESTAURANT = gql`
       email
       phone
       menu {
+        id
         price
         name
       }
@@ -47,11 +49,26 @@ const GET_RESTAURANT = gql`
   }
 `;
 
+const CREATE_CLAIM = gql`
+  mutation createClaim($input: ClaimInput) {
+    createClaim(claimInput: $input) {
+      success
+      claim {
+        item {
+          id
+        }
+      }
+    }
+  }
+`
+
 function main() {
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [createClaim] = useMutation(CREATE_CLAIM);
+
   const [click, setClick] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState("");
 
   let restaurantId = ""
   if (typeof window !== "undefined") {
@@ -62,6 +79,22 @@ function main() {
   const { loading, error, data } = useQuery(GET_RESTAURANT, {
     variables: { id: restaurantId },
   });
+
+  const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      restaurant_id: restaurantId,
+      item_id: selectedMenuItem
+    }
+
+    createClaim({
+      variables: {
+        input: payload
+      }
+    }).then(res => {
+      console.log(res);
+    }).catch(error => console.error(error))
+  }
 
   if (loading) return null;
   if (error) return `Error ${error}`;
@@ -91,15 +124,21 @@ function main() {
                   <input
                     className={styles.input}
                     name="ic"
-                    autocomplete="off"
+                    autoComplete="off"
                     placeholder="IC Number"
                     ref={register}
                   />
                 </div>
                 <div className={styles.menuWrapper}>
-                  <MenuItem text="Chicken rice" />
-                  <MenuItem text="Lor mee" />
-                  <MenuItem text="Ham Jin Beng" />
+                  {data.restaurant.menu.map(item => {
+                    return (
+                    <MenuItem
+                      key={item.name}
+                      text={item.name}
+                      isSelected={item.id === selectedMenuItem}
+                      onClick={() => setSelectedMenuItem(item.id)}
+                    />
+                  )})}
                 </div>
                 <div className={styles.buttonContainer}>
                   <ButtonPrimary>Claim</ButtonPrimary>
