@@ -14,7 +14,7 @@ const CustomerSchema = new Schema(
       type: String,
     },
     card: {
-      number: Number,
+      number: String,
       name: String,
       date: Date,
     },
