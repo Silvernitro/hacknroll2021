@@ -101,7 +101,6 @@ const typeDefs = gql`
     claims: [Claim!]!
     donations: [Donation!]!
     profile_pic: String
-    qr_code: String
     balance: Float!
   }
 
