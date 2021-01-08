@@ -1,24 +1,31 @@
+import Image from "next/image";
 import styles from "../styles/Home.module.css";
-
 import HomeNav from "components/HomeNav/HomeNav";
+import NavbarHome from 'components/Navbar/NavbarHome';
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      <HomeNav />
+      <NavbarHome />
       <main className={styles.main}>
-        <h1>Home</h1>
+        <div className={styles.landingContainer}>
+          <div className={styles.aboutContainer}>
+            <p className={styles.title}>FoodCross</p>
+            <p>
+              It is a long established fact that a reader will be distracted by
+              the readable content of a page when looking at its layout.{" "}
+            </p>
+          </div>
+          <Image
+            src="/../public/landingPic.jpg"
+            alt="LandingPicture"
+            width={700}
+            height={800}
+          />
+        </div>
       </main>
-
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
+        <p>Footer</p>
       </footer>
     </div>
   );
