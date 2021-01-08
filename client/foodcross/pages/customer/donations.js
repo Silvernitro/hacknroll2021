@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
-import Navbar from 'components/Navbar/NavbarDonations';
+import Navbar from 'components/Navbar/NavbarCustomer';
 
 function donations() {
   const { register, handleSubmit, errors } = useForm();
