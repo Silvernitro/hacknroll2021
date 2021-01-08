@@ -48,7 +48,7 @@ function Navbar() {
           <ul className={style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
-                <Link to href="/">
+                <Link to href="/customer/main">
                 Home
                 </Link>
               </div>

@@ -8,7 +8,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { ButtonOutline } from '../Button/ButtonOutline';
 import Link from 'next/link';
 
-function Navbar() {
+function Navbar({ toggleQrModal }) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -31,7 +31,7 @@ function Navbar() {
 
   if (typeof window != 'undefined') {
     window.addEventListener('resize', showButton);
-  } 
+  }
 
   return (
     <>
@@ -48,14 +48,21 @@ function Navbar() {
           <ul className={style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
-                <Link to href="/">
+                <Link to href="/restaurant/main">
                 Home
                 </Link>
               </div>
             </li>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
+                <Link to href="/restaurant/menu">
                 Menu
+                </Link>
+              </div>
+            </li>
+            <li className={style.navItem}>
+              <div className={style.navLinks} onClick={toggleQrModal}>
+                QR Code
               </div>
             </li>
           </ul>
