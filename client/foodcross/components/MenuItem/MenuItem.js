@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './MenuItem.module.css';
 
-export const MenuItem = ({
-  children, 
-  type, 
-  buttonStyle, 
-  buttonSize
-}) => {
+function MenuItem(props) {
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState(true);
 
-    const STYLES = [style.btnPrimary, style.btnOutline]
-    const onClick = () => {
-        this.setState({buttonStyle: style.btnPrimary});
-    } 
-    return (
-      <div className={style.btnMobile}>
-        <button
-          className={style.btnOutline}
-          onClick={onClick}
-          type={type}
-        >
-          {children}
-        </button>
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  return (
+    <>
+      <div onClick={handleClick} className={click ? style.btnPrimary : style.btnOutline}>
+        {props.text}
       </div>
-    )
-};
+    </>
+  );
+}
+
+export default MenuItem;
