@@ -1,22 +1,17 @@
-// // import express from 'express';
-// // import { graphqlExpress } from 'apollo-server-express';
-// const express = require('express');
-// const { graphqlExpress } = require('apollo-server-express');
-// const bodyParser = require('body-parser');
-
-// const myGraphQLSchema = {}
-// const PORT = 4000;
-
-// const app = express();
-
-// // bodyParser is needed just for POST.
-// app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: myGraphQLSchema }));
-
-// app.listen(PORT);
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
+const mongoose = require('mongoose');
+require('dotenv').config()
+
+mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("DB connected.");
+});
+
 
 // Some fake data
 const books = [
@@ -58,5 +53,5 @@ app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 // Start the server
 app.listen(4000, () => {
-  console.log('Go to http://localhost:3000/graphiql to run queries!');
+  console.log('Go to http://localhost:4000/graphiql to run queries!');
 });
