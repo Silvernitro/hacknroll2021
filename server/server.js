@@ -13,6 +13,7 @@ const RestaurantAPI = require("./dataSources/restaurant");
 const CustomerAPI = require("./dataSources/customer");
 const DonationAPI = require("./dataSources/donation");
 const ClaimAPI = require("./dataSources/claim");
+const AuthAPI = require("./dataSources/auth");
 const Session = require("./models/session");
 
 require("dotenv").config();
@@ -34,14 +35,14 @@ const server = new ApolloServer({
   context: async ({ req }) =>{
     // get the user token from the headers
     const token = req.headers.authentication || '';
-     
+
     // try to retrieve a user with the token
     const user = await getUser(token);
-   
+
     // optionally block the user
     // we could also check user roles/permissions here
-    if (!user) throw new AuthenticationError('you must be logged in to query this schema');  
-   
+    // if (!user) throw new AuthenticationError('you must be logged in to query this schema');
+
     // add the user to the context
     return {
       user,
@@ -55,6 +56,7 @@ const server = new ApolloServer({
     customerAPI: new CustomerAPI(),
     donationAPI: new DonationAPI(),
     claimAPI: new ClaimAPI(),
+    authAPI: new AuthAPI(),
   }),
 });
 
