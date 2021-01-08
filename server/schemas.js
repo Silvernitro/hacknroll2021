@@ -8,11 +8,11 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createRestaurant(restaurantInput: RestaurantInput): Restaurant
-    createCustomer(customerInput: CustomerInput): Customer
-    createDonation(donationInput: DonationInput): Donation
-    createClaim(claimInput: ClaimInput): Claim
-    addMenuItem(menuInput: MenuInput): Menu
+    createRestaurant(restaurantInput: RestaurantInput): RestaurantUpdateResponse!
+    createCustomer(customerInput: CustomerInput): CustomerUpdateResponse!
+    createDonation(donationInput: DonationInput): DonationUpdateResponse!
+    createClaim(claimInput: ClaimInput): ClaimUpdateResponse!
+    addMenuItem(menuInput: MenuInput): MenuUpdateResponse!
   }
 
   input RestaurantInput {
@@ -60,6 +60,36 @@ const typeDefs = gql`
     restaurant_id: String!
   }
 
+  type RestaurantUpdateResponse {
+    success: Boolean!
+    restaurant: Restaurant
+    message: String
+  }
+
+  type CustomerUpdateResponse {
+    success: Boolean!
+    customer: Customer
+    message: String
+  }
+
+  type DonationUpdateResponse {
+    success: Boolean!
+    donation: Donation
+    message: String
+  }
+
+  type ClaimUpdateResponse {
+    success: Boolean!
+    claim: Claim
+    message: String
+  }
+
+  type MenuUpdateResponse {
+    success: Boolean!
+    menu: Menu
+    message: String
+  }
+
   type Restaurant {
     id: String!
     name: String!
@@ -76,7 +106,7 @@ const typeDefs = gql`
 
   type Menu {
     restaurant_id: String!
-    menu: [Item!]!
+    items: [Item!]!
   }
 
   type Customer {
