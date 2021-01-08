@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import QRCode from "qrcode.react";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
-import MenuItem from "components/MenuItem/MenuItem";
+import MenuItem from 'components/MenuItem.js/MenuItem.js';
 import Navbar from 'components/Navbar/NavbarRestaurant';
 import Modal from 'components/Modal/Modal';
 import { ButtonOutline } from 'components/Button/ButtonOutline';

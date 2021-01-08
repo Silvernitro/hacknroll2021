@@ -32,9 +32,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #E8E8E8;
-  box-shadow: 0px 0px 40px 0px rgba(173,173,173,1);
+  background-color: white;
+  box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
   padding: 2rem 2rem 1rem 2rem;
+  border-radius: 5px;
 }
 
 .form {

@@ -55,11 +55,15 @@ function Navbar() {
             </li>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
+                <Link to href="/about">
                 About Us
+                </Link>
               </div>
             </li>
           </ul>
+          <div className={style.profileIcon}>
           <FontAwesomeIcon icon={faUserCircle} />
+          </div>
         </div>
       </nav>
     </>

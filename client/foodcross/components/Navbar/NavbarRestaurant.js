@@ -66,7 +66,9 @@ function Navbar({ toggleQrModal }) {
               </div>
             </li>
           </ul>
+          <div className={style.profileIcon}>
           <FontAwesomeIcon icon={faUserCircle} />
+          </div>
         </div>
       </nav>
     </>

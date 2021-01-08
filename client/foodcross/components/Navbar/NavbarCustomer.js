@@ -54,7 +54,9 @@ function Navbar() {
               </div>
             </li>
           </ul>
+          <div className={style.profileIcon}>
           <FontAwesomeIcon icon={faUserCircle} />
+          </div>
         </div>
       </nav>
     </>

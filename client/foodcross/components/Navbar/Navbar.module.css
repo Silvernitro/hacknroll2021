@@ -86,6 +86,9 @@
   }
 
   @media screen and (max-width: 960px) {
+    .navbar {
+      margin-bottom: 3%
+    }
     .NavbarItems {
       position: relative;
       margin-bottom: 3%;
@@ -101,6 +104,11 @@
       left: -100%;
       opacity: 1;
       transition: all 0.5s ease;
+    }
+    .profileIcon {
+      margin-top: 27px;
+      margin-left: 300px;
+      display: flex;
     }
 
     .navMenuActive {
