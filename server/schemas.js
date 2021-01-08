@@ -11,6 +11,7 @@ const typeDefs = gql`
     createRestaurant(restaurantInput: RestaurantInput): Restaurant
     createCustomer(customerInput: CustomerInput): Customer
     createDonation(donationInput: DonationInput): Donation
+    createClaim(claimInput: ClaimInput): Claim
   }
 
   input RestaurantInput {
@@ -36,6 +37,12 @@ const typeDefs = gql`
     amount: Int!
   }
 
+  input ClaimInput {
+    ic: String!
+    restaurant_id: String!
+    item_id: String!
+  }
+
   input CardInput {
     number: String!
     name: String!
@@ -49,7 +56,7 @@ const typeDefs = gql`
     phone: String!
     description: String
     location: String
-    menu: [MenuItem!]!
+    menu: [Item!]!
     claims: [Claim!]!
     donations: [Donation!]!
     profile_pic: String
@@ -78,15 +85,15 @@ const typeDefs = gql`
     date: String!
   }
 
-  type Claim {
-    item: MenuItem!
-    ic: String!
-    date: String!
+  type Item {
+    price: Int!
+    name: String!
   }
 
-  type MenuItem {
-    name: String!
-    price: Int!
+  type Claim {
+    item: Item!
+    ic: String!
+    date: String!
   }
 `;
 
