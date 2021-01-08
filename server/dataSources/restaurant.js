@@ -13,10 +13,8 @@ class RestaurantAPI extends DataSource {
 
   async getRestaurantById({ id }) {
     try {
-      console.log("id" + id);
-      const restaurant = await Restaurant.findById(id);
-      console.log(restaurant);
-      return this.restaurantReducer(restaurant);
+      return Restaurant.findById(id)
+        .then(doc => this.restaurantReducer(doc));
     } catch (error) {
       console.error(error);
     }
@@ -38,8 +36,7 @@ class RestaurantAPI extends DataSource {
         location,
       };
       const newRestaurant = new Restaurant(restaurantDetails);
-      const document = await newRestaurant.save();
-      return document
+      return newRestaurant.save();
     } catch (err) {
       console.log(`Unable to create restaurant, \n ${err}`);
     }

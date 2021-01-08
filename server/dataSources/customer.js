@@ -12,8 +12,8 @@ class CustomerAPI extends DataSource {
 
   async getCustomerById({ id }) {
     try {
-      const customer = await Customer.findById(id);
-      return this.customerReducer(customer);
+      return Customer.findById(id)
+        .then(doc => this.customerReducer(doc));
     } catch (err) {
       console.log(`Unable to get customer information, \n ${err}`);
     }
@@ -43,8 +43,7 @@ class CustomerAPI extends DataSource {
         },
       }
       const newCustomer = new Customer(customerDetails);
-      const document = await newCustomer.save();
-      return document;
+      return newCustomer.save();
     } catch (err) {
       console.log(`Unable to create customer, \n ${err}`);
     }

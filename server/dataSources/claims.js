@@ -13,12 +13,11 @@ class ClaimsAPI extends DataSource {
         ic
       }
       const newClaim = new Claims(claimDetails);
-      const document = await newClaim.save()
+      return newClaim.save()
         .then(doc => {
           doc.populate('item')
           return doc
         });
-      return document;
     } catch (err) {
       console.log(`Unable to create claim, ${err}`);
     }
