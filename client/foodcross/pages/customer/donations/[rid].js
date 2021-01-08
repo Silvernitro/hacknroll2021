@@ -3,6 +3,7 @@ import styles from "../../../styles/Donations.module.css";
 import { gql, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useMutation } from "@apollo/react-hooks";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import Navbar from "components/Navbar/NavbarDonations";
@@ -16,15 +17,44 @@ const GET_RESTAURANTS = gql`
   }
 `;
 
+const DONATE = gql`
+  mutation donate($input: DonationInput) {
+    createDonation(donationInput: $input) {
+      success
+      donation {
+        amount
+        date
+      }
+      message
+    }
+  }
+`
+
 function donations(props) {
   const router = useRouter();
   const { rid } = router.query;
   const { loading, error, data } = useQuery(GET_RESTAURANTS, {
     variables: { id: rid },
   });
+  const [createDonation] = useMutation(DONATE);
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = ({amount}) => {
+    const payload = {
+      // TODO: GET ID FROM GRAPH QL CACHE
+      donor_id: "",
+      restaurant_id: rid,
+      amount: parseInt(amount)
+    }
+
+    createDonation({
+      variables: {
+        input: payload
+      }
+    }).then(res => {
+      console.log(res)
+    })
+  }
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
