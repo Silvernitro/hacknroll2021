@@ -43,6 +43,16 @@ class RestaurantAPI extends DataSource {
     }
   }
 
+  async addDonationToRestaurant({ amount, restaurant_id, _id: donation_id}) {
+    return Restaurant.findByIdAndUpdate(
+        restaurant_id,
+        {
+          $push: { donations: donation_id},
+          $inc: { balance: amount }
+        }
+      );
+  }
+
   restaurantReducer(restaurant) {
     return {
       id: restaurant._id || "123456",

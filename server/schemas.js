@@ -8,7 +8,8 @@ const typeDefs = gql`
 
   type Mutation {
     createRestaurant(restaurantInput: RestaurantInput): Restaurant
-    createCustomer(customerInput: CustomerInput!): Customer
+    createCustomer(customerInput: CustomerInput): Customer
+    createDonation(donationInput: DonationInput): Donation
   }
 
   input RestaurantInput {
@@ -26,6 +27,12 @@ const typeDefs = gql`
     password: String!
     phone: String!
     card: CardInput
+  }
+
+  input DonationInput {
+    donor_id: String!
+    restaurant_id: String!
+    amount: Int!
   }
 
   input CardInput {

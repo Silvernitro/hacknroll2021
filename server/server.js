@@ -7,6 +7,7 @@ const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 const RestaurantAPI = require('./dataSources/restaurant');
 const CustomerAPI = require('./dataSources/customer');
+const DonationAPI = require('./dataSources/donation');
 
 require('dotenv').config();
 
@@ -25,7 +26,8 @@ const server = new ApolloServer({
   },
   dataSources: () => ({
     restaurantAPI: new RestaurantAPI(),
-    customerAPI: new CustomerAPI()
+    customerAPI: new CustomerAPI(),
+    donationAPI: new DonationAPI()
   })
 });
 

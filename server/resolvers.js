@@ -13,6 +13,17 @@ module.exports = {
     },
     createCustomer: async (_, { customerInput }, { dataSources }) => {
       return dataSources.customerAPI.createCustomer(customerInput);
+    },
+    createDonation: async (_, { donationInput }, { dataSources }) => {
+      try {
+        const donation = await dataSources.donationAPI.createDonation(donationInput);
+        ataSources.restaurantAPI.addDonationToRestaurant(donation);
+        dataSources.customerAPI.addDonationToCustomer(donation);
+
+        return dataSources.donationAPI.donationReducer(donation);
+      } catch (error) {
+
+      }
     }
   }
 }
