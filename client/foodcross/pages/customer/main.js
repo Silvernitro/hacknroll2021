@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
-import Navbar from 'components/Navbar/NavbarRestaurant';
+import Navbar from 'components/Navbar/NavbarCustomer';
 
 function main() {
   const { register, handleSubmit, errors } = useForm();
@@ -36,7 +36,7 @@ function main() {
                 {errors.exampleRequired && <span>This field is required</span>}
               </div>
               <div className={styles.buttonContainer}>
-                <ButtonPrimary>Claim</ButtonPrimary>
+                <ButtonPrimary>Donate</ButtonPrimary>
               </div>
               </form>
               <div className={styles.signUpContainer}></div>

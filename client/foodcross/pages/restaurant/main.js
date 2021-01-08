@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
-import MenuItem from "components/MenuItem/MenuItem";
+import MenuItem from 'components/MenuItem.js/MenuItem.js';
 import Navbar from 'components/Navbar/NavbarRestaurant';
 import { ButtonOutline } from 'components/Button/ButtonOutline';
 
