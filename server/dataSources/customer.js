@@ -23,6 +23,7 @@ class CustomerAPI extends DataSource {
     name,
     email,
     password,
+    phone,
     card: {
       name: card_name,
       number,
@@ -47,6 +48,16 @@ class CustomerAPI extends DataSource {
     } catch (err) {
       console.log(`Unable to create customer, \n ${err}`);
     }
+  }
+
+  async addDonationToCustomer({ amount, donor_id, _id: donation_id }) {
+    return Customer.findByIdAndUpdate(
+        donor_id,
+        {
+          $push: { donations: donation_id },
+          $inc: { totalDonations: amount }
+        }
+      );
   }
 
   customerReducer(customer) {

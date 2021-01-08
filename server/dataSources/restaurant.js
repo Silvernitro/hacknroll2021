@@ -6,6 +6,11 @@ class RestaurantAPI extends DataSource {
     super();
   }
 
+  async getAllRestaurants() {
+    const restaurants = await Restaurant.find({});
+    return restaurants.map(restaurant => this.restaurantReducer(restaurant));
+  }
+
   async getRestaurantById({ id }) {
     try {
       console.log("id" + id);
@@ -38,6 +43,16 @@ class RestaurantAPI extends DataSource {
     } catch (err) {
       console.log(`Unable to create restaurant, \n ${err}`);
     }
+  }
+
+  async addDonationToRestaurant({ amount, restaurant_id, _id: donation_id}) {
+    return Restaurant.findByIdAndUpdate(
+        restaurant_id,
+        {
+          $push: { donations: donation_id},
+          $inc: { balance: amount }
+        }
+      );
   }
 
   restaurantReducer(restaurant) {
