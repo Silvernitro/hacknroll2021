@@ -1,14 +1,15 @@
 const { DataSource } = require('apollo-datasource');
+const Restaurant = require('../models/restaurants');
 
 class RestaurantAPI extends DataSource {
-  constructor({ store }) {
+  constructor() {
     super();
-    this.store = store;
   }
 
   async getRestaurantById({ id }) {
     try {
-      const restaurant = await this.store.restaurants.findById(id);
+      const restaurant = await Restaurant.findById(id);
+      console.log(restaurant);
       return this.restaurantReducer(restaurant);
     } catch (error) {
       console.error(error);

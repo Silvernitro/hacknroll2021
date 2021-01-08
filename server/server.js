@@ -4,6 +4,10 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const mongoose = require('mongoose');
 const typeDefs = require('./schemas');
+const resolvers = require('./resolvers');
+const RestaurantAPI = require('./dataSources/restaurant');
+const CustomerAPI = require('./dataSources/customer');
+
 require('dotenv').config();
 
 mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true});
@@ -16,6 +20,14 @@ db.once('open', function() {
 // Put together a schema
 const schema = makeExecutableSchema({
   typeDefs,
+  resolvers,
+  context: () => {
+    return {}
+  },
+  dataSources: () => ({
+    restaurantAPI: new RestaurantAPI(),
+    customerAPI: new CustomerAPI()
+  })
 });
 
 // Initialize the app

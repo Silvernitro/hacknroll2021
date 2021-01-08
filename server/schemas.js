@@ -2,8 +2,8 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
-    restaurant(id: ID): Restaurant
-    customer(id: ID): Customer
+    restaurant(id: String): Restaurant
+    customer(id: String): Customer
   }
 
   type Restaurant {
