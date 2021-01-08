@@ -40,16 +40,21 @@ const DONATE = gql`
 function donations(props) {
   const router = useRouter();
   const { rid } = router.query;
-  const { loadingSession, errorSession, session } = useQuery(GET_SESSION);
+  let user_id = ""
+  if (typeof window !== "undefined") {
+    user_id = localStorage.getItem("userId");
+  }
+
   const { loading, error, data } = useQuery(GET_RESTAURANT, {
     variables: { id: rid },
   });
+
   const [createDonation] = useMutation(DONATE);
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = ({amount}) => {
     const payload = {
-      donor_id: session.id,
+      donor_id: user_id,
       restaurant_id: rid,
       amount: parseInt(amount)
     }
@@ -63,8 +68,8 @@ function donations(props) {
     })
   }
 
-  if (loading && loadingSession) return null;
-  if (error && errorSession) return `Error! ${error}`;
+  if (loading || !user_id) return null;
+  if (error || !user_id) return `Error! ${error}`;
 
   return (
     <>

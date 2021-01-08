@@ -27,35 +27,44 @@ const GET_RESTAURANT = gql`
       name
       email
       phone
-      # description
-      location
-      menu
-      claims
-      donations
-      # profile_pic
+      menu {
+        price
+        name
+      }
+      claims {
+        item {
+          price
+          name
+        }
+        date
+      }
+      donations {
+        amount
+        date
+      }
       balance
     }
   }
 `;
 
 function main() {
-  const { data } = useQuery(ID);
-  console.log(data);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   const [click, setClick] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { isLoadingSession, errorSession, session } = useQuery(GET_SESSION);
-  const restaurantId = session?.id;
-  const donationUrl = `http://localhost:3000/customer/donations/${restaurantId ?? ""}`;
+  let restaurantId = ""
+  if (typeof window !== "undefined") {
+    restaurantId = localStorage.getItem("userId");
+  }
+  const donationUrl = `http://localhost:3000/customer/donations/${restaurantId}`;
 
-  const { isLoadingData, errorData, data } = useQuery(GET_RESTAURANT, {
+  const { loading, error, data } = useQuery(GET_RESTAURANT, {
     variables: { id: restaurantId },
   });
 
-  if (isLoadingData) return null;
-  if (errorData) return `Error ${errorSession}`;
+  if (loading) return null;
+  if (error) return `Error ${error}`;
 
   return (
       <>
@@ -64,19 +73,19 @@ function main() {
           {/* QR code modal */}
           <Modal handleClose={() => setIsModalOpen(false)} isActive={isModalOpen}>
             <div style={{paddingBottom: 20}}>
-              {!isLoadingSession && !errorSession && <QRCode value={donationUrl} size={256} />}
+              {<QRCode value={donationUrl} size={256} />}
             </div>
           </Modal>
 
           <div className={styles.columnFlex}>
           <div className={styles.heading}>
             Balance
-            <h1 className={styles.subtitle}>{`$${data?.balance ?? 0}`}</h1>
+            <h1 className={styles.subtitle}>{`$${data.restaurant.balance}`}</h1>
           </div>
           <div className={styles.columnFlex}>
             <div className={styles.formContainer}>
               <h1 className={styles.title}>New Claim</h1>
-              <p className={styles.subtitle}>{data?.name ?? "Your Restaurant"}</p>
+              <p className={styles.subtitle}>{data.restaurant.name}</p>
               <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.inputContainer}>
                   <input
