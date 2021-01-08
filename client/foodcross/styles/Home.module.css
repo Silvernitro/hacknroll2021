@@ -60,6 +60,13 @@
   align-items: center;
 }
 
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-width: 880px) {
   .landingContainer {
     flex-direction: column;
