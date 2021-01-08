@@ -32,7 +32,11 @@ const server = new ApolloServer({
 // Initialize the app
 const app = express();
 
-server.applyMiddleware({ app });
+const corsOptions = {
+  origin: 'http://localhost:3000',
+}
+
+server.applyMiddleware({ app, cors: corsOptions });
 
 // Start the server
 app.listen(4000, () => {

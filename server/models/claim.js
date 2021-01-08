@@ -9,7 +9,7 @@ const ClaimSchema = new Schema(
       ref: 'MenuItem',
     },
     ic: {
-      type: Number
+      type: String,
     }
   }, {
     timestamps: true
