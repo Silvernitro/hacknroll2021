@@ -18,10 +18,12 @@ class AuthAPI extends DataSource {
       throw new AuthenticationError("Email or password not correct!");
     }
 
-    return {
-      id: user._id,
-      token: randtoken.generate(16)
-    }
+    const generatedToken = randtoken.generate(16);
+    const session = new Session({ token: generatedToken, user_id: user._id, role })
+    return session.save().then(({ user_id, token }) => ({
+      id: user_id,
+      token
+    }));
   }
 
 }

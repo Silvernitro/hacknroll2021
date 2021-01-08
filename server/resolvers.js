@@ -11,14 +11,21 @@ module.exports = {
     }
   },
   Mutation: {
-    login: async (_, { email, password, role }, context) => {
+    login: async (_, { userInput: { email, password, role }}, context) => {
       if (!context.user) {
-        const authResult = context.dataSources.authAPI.login({ email, password, role });
-        return {
-          ...authResult,
-          role,
-          success: true,
-          message: "Successfully logged in."
+        try {
+          const authResult = await context.dataSources.authAPI.authenticateUser({ email, password, role });
+          return {
+            ...authResult,
+            role,
+            success: true,
+            message: "Successfully logged in."
+          }
+        } catch (authError) {
+          return {
+            success: false,
+            message: "Failed to log in."
+          }
         }
       }
 
