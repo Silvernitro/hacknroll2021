@@ -11,6 +11,16 @@ module.exports = {
     }
   },
   Mutation: {
+    login: async (_, { email, password, role }, context) => {
+      if (!context.user) {
+        return context.dataSources.authAPI.login({ email, password, role });
+      }
+
+      return {
+        success: true,
+        message: "Already logged in."
+      }
+    },
     createRestaurant: async (_, { restaurantInput }, { dataSources }) => {
       try {
         return dataSources.restaurantAPI.createRestaurant(restaurantInput)

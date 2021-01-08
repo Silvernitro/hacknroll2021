@@ -8,11 +8,18 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    login(userInput: UserInput): LoginResponse!
     createRestaurant(restaurantInput: RestaurantInput): RestaurantUpdateResponse!
     createCustomer(customerInput: CustomerInput): CustomerUpdateResponse!
     createDonation(donationInput: DonationInput): DonationUpdateResponse!
     createClaim(claimInput: ClaimInput): ClaimUpdateResponse!
     addMenuItem(menuInput: MenuInput): MenuUpdateResponse!
+  }
+
+  input UserInput {
+    email: String!
+    password: String!
+    role: UserRole
   }
 
   input RestaurantInput {
@@ -58,6 +65,19 @@ const typeDefs = gql`
   input MenuInput {
     items: [ItemInput!]!
     restaurant_id: String!
+  }
+
+  type LoginResponse {
+    success: Boolean!
+    id: String!
+    token: String
+    role: UserRole
+    message: String
+  }
+
+  enum UserRole {
+    CUSTOMER
+    RESTAURANT
   }
 
   type RestaurantUpdateResponse {
