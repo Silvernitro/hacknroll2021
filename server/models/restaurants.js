@@ -46,11 +46,9 @@ const restaurantSchema = new Schema({
   profile_pic: {
     type: String
   },
-  qr_code: {
-    type: String
-  },
   balance: {
-    type: Number
+    type: Number,
+    default: 0
   }
 });
 

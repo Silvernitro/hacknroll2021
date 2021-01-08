@@ -8,9 +8,9 @@
     position: sticky;
     z-index: 999;
     width: 100%;
-    margin-top: 10px; 
+    margin-top: 10px;
   }
-  
+
   .navbarContainer {
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@
     max-width: 1500px;
     color: black;
   }
-  
+
   .navbarLogo {
     color: rgb(0, 0, 0);
     justify-self: start;
@@ -32,12 +32,12 @@
     margin-bottom: 8px;
     margin-right: 3rem;
   }
-  
+
   .fa-typo3 {
     margin-left: 0.5rem;
     font-size: 1.8rem;
   }
-  
+
   .navMenu {
     display: grid;
     grid-template-columns: repeat(4, auto);
@@ -48,11 +48,11 @@
     justify-content: end;
     margin-right: 2rem;
   }
-  
+
   .navItem {
     height: 40px;
   }
-  
+
   .navLinks {
     color: rgb(0, 0, 0);
     display: flex;
@@ -60,21 +60,22 @@
     text-decoration: none;
     padding: 0.5rem 2rem;
     height: 100%;
+    cursor: pointer
   }
-  
+
   .navLinks:hover {
     border-bottom: 5px solid #fff;
     transition: all 0.3s ease-out;
   }
-  
+
   .fa-bars {
     color: rgb(0, 0, 0);
   }
-  
+
   .nav-links-mobile {
     display: none;
   }
-  
+
   .menuIcon {
     display: none;
   }
@@ -83,7 +84,7 @@
     color:rgb(0, 0, 0);
     font-size: 1.8rem;
   }
-  
+
   @media screen and (max-width: 960px) {
     .navbar {
       margin-bottom: 3%
@@ -92,7 +93,7 @@
       position: relative;
       margin-bottom: 3%;
     }
-  
+
     .navMenu {
       display: flex;
       flex-direction: column;
@@ -104,13 +105,12 @@
       opacity: 1;
       transition: all 0.5s ease;
     }
-
     .profileIcon {
       margin-top: 27px;
       margin-left: 300px;
       display: flex;
     }
-  
+
     .navMenuActive {
       background: #242222;
       left: 0;
@@ -118,27 +118,27 @@
       transition: all 0.5s ease;
       z-index: 1;
     }
-  
+
     .navLinks {
       text-align: center;
       padding: 2rem;
       width: 100%;
       display: table;
     }
-  
+
     .navLinks:hover {
       background-color: #fff;
       color: #242424;
       border-radius: 0;
     }
-  
+
     .navbarLogo {
       position: absolute;
       top: 0;
       left: 0;
       transform: translate(25%, 50%);
     }
-  
+
     .menuIcon {
       display: block;
       position: absolute;
@@ -148,12 +148,12 @@
       font-size: 1.8rem;
       cursor: pointer;
     }
-  
+
     .fa-times {
       color: rgb(0, 0, 0);
       font-size: 2rem;
     }
-  
+
     .nav-links-mobile {
       display: block;
       text-align: center;
@@ -168,11 +168,10 @@
       border: 1px solid #fff;
       transition: all 0.3s ease-out;
     }
-  
+
     .nav-links-mobile:hover {
       background: #fff;
       color: #242424;
       transition: 250ms;
     }
   }
-  
