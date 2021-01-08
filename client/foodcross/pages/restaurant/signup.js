@@ -1,15 +1,33 @@
 import React from "react";
 import styles from "../../styles/Signup.module.css";
-
 import Link from "next/link";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 
+const SIGNUP_RESTAURANT = gql`
+  mutation CreateRestaurant($restaurantInput: RestaurantInput) {
+    createRestaurant(restaurantInput: $restaurantInput) {
+      name
+      email
+      phone
+      location
+    }
+  }
+`;
+
 const Signup = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [addRestaurant, { data }] = useMutation(SIGNUP_RESTAURANT);
+
+  const onSubmit = (formData) => {
+    addRestaurant({ variables: { restaurantInput: formData } }).then((res) =>
+      console.log(res)
+    );
+  };
 
   return (
     <div className={styles.background}>
@@ -38,7 +56,7 @@ const Signup = (props) => {
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
-              name="number"
+              name="phone"
               placeholder="Phone Number"
               ref={register}
             />

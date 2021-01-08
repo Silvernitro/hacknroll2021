@@ -9,22 +9,34 @@ import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 
 const SIGNUP_CUSTOMER = gql`
-  mutation AddCustomer($type: String!) {
-    addTodo(type: $type) {
-      id
-      type
+  mutation CreateCustomer(
+    $name: String!
+    $email: String!
+    $password: String!
+    $phone: String!
+    $location: String!
+  ) {
+    createCustomer(
+      name: $name
+      email: $email
+      password: $password
+      phone: $phone
+    ) {
+      name
+      email
+      password
+      phone
     }
   }
 `;
 
 const Signup = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const [formState, setFormState] = useState({});
-  const [addCustomer, { data }] = useMutation(SIGNUP_CUSTOMER);
+  const [addCustomer] = useMutation(SIGNUP_CUSTOMER);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    setFormState({ ...formState, ...setFormState });
+    await addCustomer({ variables: data });
   };
 
   return (
@@ -54,7 +66,7 @@ const Signup = (props) => {
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
-              name="number"
+              name="phone"
               placeholder="Phone Number"
               ref={register({ required: true })}
             />

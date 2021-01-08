@@ -9,6 +9,7 @@ module.exports = {
   },
   Mutation: {
     createRestaurant: async (_, { restaurantInput }, { dataSources }) => {
+      console.log(restaurantInput);
       return dataSources.restaurantAPI.createRestaurant(restaurantInput);
     },
     createCustomer: async (_, { customerInput }, { dataSources }) => {
