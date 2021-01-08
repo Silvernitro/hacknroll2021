@@ -7,15 +7,38 @@ class RestaurantAPI extends DataSource {
   }
 
   async getAllRestaurants() {
-    const restaurants = await Restaurant.find({});
+    const restaurants = await Restaurant.find({}).populate([
+      {
+        path: 'menu',
+      },
+      {
+        path: 'claims',
+        populate: [{ path: 'item' }]
+      },
+      {
+        path: 'donations'
+      }
+    ]);
+
     return restaurants.map(restaurant => this.restaurantReducer(restaurant));
   }
 
   async getRestaurantById({ id }) {
     try {
-      console.log("id" + id);
-      const restaurant = await Restaurant.findById(id);
-      console.log(restaurant);
+      const restaurant = await Restaurant.findById(id)
+      .populate([
+        {
+          path: 'menu',
+        },
+        {
+          path: 'claims',
+          populate: [{ path: 'item' }]
+        },
+        {
+          path: 'donations'
+        }
+      ])
+
       return this.restaurantReducer(restaurant);
     } catch (error) {
       console.error(error);
@@ -66,6 +89,19 @@ class RestaurantAPI extends DataSource {
       phone: restaurant.phone || "+65 1231 1234",
       description: restaurant.description || "This is a sample description",
       location: restaurant.location || "123 Avenue 1",
+      menu: restaurant.menu,
+      claims: restaurant.claims.map(claim => ({
+        item: claim.item,
+        ic: claim.ic,
+        date: claim.createdAt
+      })),
+      donations: restaurant.donations.map(donation => ({
+        amount: donation.amount,
+        date: donation.createdAt
+      })),
+      profile_pic: restaurant.profile_pic,
+      qr_code: restaurant.qr_code,
+      balance: restaurant.balance,
     }
   }
 }
