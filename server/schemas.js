@@ -49,6 +49,12 @@ const typeDefs = gql`
     phone: String!
     description: String
     location: String
+    menu: [MenuItem!]!
+    claims: [Claim!]!
+    donations: [Donation!]!
+    profile_pic: String
+    qr_code: String
+    balance: Int!
   }
 
   type Customer {
@@ -70,6 +76,17 @@ const typeDefs = gql`
   type Donation {
     amount: Int!
     date: String!
+  }
+
+  type Claim {
+    item: MenuItem!
+    ic: String!
+    date: String!
+  }
+
+  type MenuItem {
+    name: String!
+    price: Int!
   }
 `;
 
