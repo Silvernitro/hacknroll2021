@@ -39,6 +39,8 @@ const GET_RESTAURANT = gql`
 `;
 
 function main() {
+  const { data } = useQuery(ID);
+  console.log(data);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   const [click, setClick] = useState(false);
