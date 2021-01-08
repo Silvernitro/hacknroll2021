@@ -68,14 +68,14 @@ class RestaurantAPI extends DataSource {
     }
   }
 
-  async addDonationToRestaurant({ amount, restaurant_id, _id: donation_id}) {
+  async addDonationToRestaurant({ amount, restaurant_id, _id: donation_id }) {
     return Restaurant.findByIdAndUpdate(
-        restaurant_id,
-        {
-          $push: { donations: donation_id },
-          $inc: { balance: amount }
-        }
-      );
+      restaurant_id,
+      {
+        $push: { donations: donation_id },
+        $inc: { balance: amount }
+      }
+    );
   }
 
   async addClaimToRestaurant({
@@ -126,7 +126,6 @@ class RestaurantAPI extends DataSource {
         date: donation.createdAt
       })),
       profile_pic: restaurant.profile_pic,
-      qr_code: restaurant.qr_code,
       balance: restaurant.balance,
     }
   }
