@@ -8,7 +8,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import Navbar from "components/Navbar/NavbarDonations";
 
-const GET_RESTAURANTS = gql`
+const GET_RESTAURANT = gql`
   query GetRestaurant($id: String) {
     restaurant(id: $id) {
       name
@@ -16,6 +16,13 @@ const GET_RESTAURANTS = gql`
     }
   }
 `;
+
+const GET_SESSION = gql`
+  query getSession {
+    isLoggedIn @client
+    id @client
+  }
+`
 
 const DONATE = gql`
   mutation donate($input: DonationInput) {
@@ -33,7 +40,8 @@ const DONATE = gql`
 function donations(props) {
   const router = useRouter();
   const { rid } = router.query;
-  const { loading, error, data } = useQuery(GET_RESTAURANTS, {
+  const { loadingSession, errorSession, session } = useQuery(GET_SESSION);
+  const { loading, error, data } = useQuery(GET_RESTAURANT, {
     variables: { id: rid },
   });
   const [createDonation] = useMutation(DONATE);
@@ -41,8 +49,7 @@ function donations(props) {
 
   const onSubmit = ({amount}) => {
     const payload = {
-      // TODO: GET ID FROM GRAPH QL CACHE
-      donor_id: "",
+      donor_id: session.id,
       restaurant_id: rid,
       amount: parseInt(amount)
     }
@@ -56,8 +63,8 @@ function donations(props) {
     })
   }
 
-  if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (loading && loadingSession) return null;
+  if (error && errorSession) return `Error! ${error}`;
 
   return (
     <>
