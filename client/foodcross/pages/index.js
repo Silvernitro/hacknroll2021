@@ -1,11 +1,12 @@
 import styles from "../styles/Home.module.css";
 
 import HomeNav from "components/HomeNav/HomeNav";
+import NavbarHome from 'components/Navbar/NavbarHome';
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      <HomeNav />
+      <NavbarHome />
       <main className={styles.main}>
         <h1>Home</h1>
       </main>
