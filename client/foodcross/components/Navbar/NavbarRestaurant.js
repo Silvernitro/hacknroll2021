@@ -48,14 +48,16 @@ function Navbar({ toggleQrModal }) {
           <ul className={style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
-                <Link to href="/">
+                <Link to href="/restaurant/main">
                 Home
                 </Link>
               </div>
             </li>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
+                <Link to href="/restaurant/menu">
                 Menu
+                </Link>
               </div>
             </li>
             <li>
