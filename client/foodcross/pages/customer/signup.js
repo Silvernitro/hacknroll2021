@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/Signup.module.css";
-
 import Link from "next/link";
+import gql from "graphql-tag";
+import { Mutation } from "@apollo/react-components";
 
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 
+const SIGNUP_CUSTOMER = gql`
+  mutation AddTodo($type: String!) {
+    addTodo(type: $type) {
+      id
+      type
+    }
+  }
+`;
+
 const Signup = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [formState, setFormState] = useState({});
+
+  const onSubmit = (data) => {
+    console.log(data);
+    setFormState({ ...formState, ...setFormState });
+  };
 
   return (
     <div className={styles.background}>
@@ -22,27 +37,27 @@ const Signup = (props) => {
               className={styles.input}
               name="email"
               placeholder="Email"
-              ref={register}
+              ref={register({ required: true })}
             />
-            {errors.exampleRequired && <span>This field is required</span>}
+            {errors.email && <p>This field is required</p>}
           </div>
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
               name="name"
               placeholder="Name"
-              ref={register}
+              ref={register({ required: true })}
             />
-            {errors.exampleRequired && <span>This field is required</span>}
+            {errors.name && <p>This field is required</p>}
           </div>
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
               name="number"
               placeholder="Phone Number"
-              ref={register}
+              ref={register({ required: true })}
             />
-            {errors.exampleRequired && <span>This field is required</span>}
+            {errors.number && <p>This field is required</p>}
           </div>
           <div className={styles.inputContainer}>
             <input
@@ -52,7 +67,34 @@ const Signup = (props) => {
               type="password"
               ref={register({ required: true })}
             />
-            {errors.exampleRequired && <span>This field is required</span>}
+            {errors.password && <p>This field is required</p>}
+          </div>
+          <p className={styles.smallTitle}>Card Details</p>
+          <div className={styles.inputContainer}>
+            <input
+              className={styles.input}
+              name="name"
+              placeholder="Card Holder Name"
+              ref={register}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              className={styles.input}
+              name="cardNumber"
+              autocomplete="nope"
+              placeholder="Card Number"
+              ref={register}
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              className={styles.input}
+              name="expiry"
+              autocomplete="nope"
+              placeholder="Expiry Date"
+              ref={register}
+            />
           </div>
           <div className={styles.buttonContainer}>
             <ButtonPrimary>Sign Up</ButtonPrimary>

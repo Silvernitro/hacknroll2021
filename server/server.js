@@ -7,6 +7,7 @@ const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 const RestaurantAPI = require('./dataSources/restaurant');
 const CustomerAPI = require('./dataSources/customer');
+const cors = require('cors');
 
 require('dotenv').config();
 
@@ -32,11 +33,9 @@ const server = new ApolloServer({
 // Initialize the app
 const app = express();
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-}
+app.use(cors());
 
-server.applyMiddleware({ app, cors: corsOptions });
+server.applyMiddleware({ app, cors: false });
 
 // Start the server
 app.listen(4000, () => {
