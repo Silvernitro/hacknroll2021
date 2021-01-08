@@ -6,12 +6,15 @@ class RestaurantAPI extends DataSource {
     super();
   }
 
+  async getAllRestaurants() {
+    const restaurants = await Restaurant.find({});
+    return restaurants.map(restaurant => this.restaurantReducer(restaurant));
+  }
+
   async getRestaurantById({ id }) {
     try {
-      console.log("id" + id);
-      const restaurant = await Restaurant.findById(id);
-      console.log(restaurant);
-      return this.restaurantReducer(restaurant);
+      return Restaurant.findById(id)
+        .then(doc => this.restaurantReducer(doc));
     } catch (error) {
       console.error(error);
     }
@@ -33,11 +36,7 @@ class RestaurantAPI extends DataSource {
         location,
       };
       const newRestaurant = new Restaurant(restaurantDetails);
-      await newRestaurant.save();
-      return this.restaurantReducer({
-        _id: newRestaurant._id,
-        ...restaurantDetails
-      })
+      return newRestaurant.save();
     } catch (err) {
       console.log(`Unable to create restaurant, \n ${err}`);
     }

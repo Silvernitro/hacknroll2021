@@ -2,6 +2,7 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
+    getAllRestaurants: [Restaurant!]!
     restaurant(id: String): Restaurant
     customer(id: String): Customer
   }
@@ -10,6 +11,7 @@ const typeDefs = gql`
     createRestaurant(restaurantInput: RestaurantInput): Restaurant
     createCustomer(customerInput: CustomerInput): Customer
     createDonation(donationInput: DonationInput): Donation
+    createClaim(claimInput: ClaimInput): Claim
   }
 
   input RestaurantInput {
@@ -33,6 +35,12 @@ const typeDefs = gql`
     donor_id: String!
     restaurant_id: String!
     amount: Int!
+  }
+
+  input ClaimInput {
+    ic: String!
+    restaurant_id: String!
+    item_id: String!
   }
 
   input CardInput {
@@ -68,6 +76,17 @@ const typeDefs = gql`
 
   type Donation {
     amount: Int!
+    date: String!
+  }
+
+  type Item {
+    price: Int!
+    name: String!
+  }
+
+  type Claim {
+    item: Item!
+    ic: String!
     date: String!
   }
 `;
