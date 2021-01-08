@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { Mutation } from "@apollo/react-components";
+import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 
 const SIGNUP_CUSTOMER = gql`
-  mutation AddTodo($type: String!) {
+  mutation AddCustomer($type: String!) {
     addTodo(type: $type) {
       id
       type
@@ -20,6 +20,7 @@ const SIGNUP_CUSTOMER = gql`
 const Signup = (props) => {
   const { register, handleSubmit, errors } = useForm();
   const [formState, setFormState] = useState({});
+  const [addCustomer, { data }] = useMutation(SIGNUP_CUSTOMER);
 
   const onSubmit = (data) => {
     console.log(data);
