@@ -68,6 +68,10 @@
   justify-content: center;
 }
 
+.restaurantsContainer {
+  width: 100%;
+}
+
 @media (max-width: 880px) {
   .landingContainer {
     flex-direction: column;
