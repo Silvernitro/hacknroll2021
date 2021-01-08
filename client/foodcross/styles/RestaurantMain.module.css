@@ -29,7 +29,7 @@
     background-image: url("../public/donations.jpg");
 
     /* Full height */
-    height: 100vh;
+    height: 100%;
     width: 100vw;
   
     /* Center and scale the image nicely */
@@ -53,7 +53,8 @@
   padding: 2rem 2rem 1rem 2rem;
   margin-top: 20px;
   border-radius: 5px;
-  margin-left: 10%
+  margin-left: 10%;
+  margin-bottom: 30px;
 }
 
 .transactions {
@@ -90,7 +91,6 @@
 
 .inputContainer {
   box-shadow: 0px 0px 20px 0px #c9c7aa;
-  padding: 1rem 1rem;
 }
 
 .input {
@@ -113,7 +113,6 @@
 }
 
 .menuWrapper {
-  margin-top: -20px;
   align-items: center;
 }
 
