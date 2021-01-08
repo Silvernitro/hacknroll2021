@@ -13,39 +13,79 @@ import Navbar from "components/Navbar/NavbarRestaurant";
 import Modal from "components/Modal/Modal";
 import { ButtonOutline } from "components/Button/ButtonOutline";
 
-const ID = gql`
-  query Id {
+const GET_SESSION = gql`
+  query getSession {
+    isLoggedIn @client
     id @client
+  }
+`
+
+const GET_RESTAURANT = gql`
+  query GetRestaurant($id: String) {
+    restaurant(id: $id) {
+      id
+      name
+      email
+      phone
+      menu {
+        price
+        name
+      }
+      claims {
+        item {
+          price
+          name
+        }
+        date
+      }
+      donations {
+        amount
+        date
+      }
+      balance
+    }
   }
 `;
 
 function main() {
-  const { data } = useQuery(ID);
-  console.log(data);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   const [click, setClick] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  let restaurantId = ""
+  if (typeof window !== "undefined") {
+    restaurantId = localStorage.getItem("userId");
+  }
+  const donationUrl = `http://localhost:3000/customer/donations/${restaurantId}`;
+
+  const { loading, error, data } = useQuery(GET_RESTAURANT, {
+    variables: { id: restaurantId },
+  });
+
+  if (loading) return null;
+  if (error) return `Error ${error}`;
+
   return (
-    <>
-      <Navbar toggleQrModal={() => setIsModalOpen(!isModalOpen)} />
-      <div className={styles.background}>
-        {/* QR code modal */}
-        <Modal handleClose={() => setIsModalOpen(false)} isActive={isModalOpen}>
-          <div style={{ paddingBottom: 20 }}>
-            <QRCode value="https://www.google.com" size={256} />
-          </div>
-        </Modal>
-        <div className={styles.columnFlex}>
+      <>
+        <Navbar toggleQrModal={() => setIsModalOpen(!isModalOpen)} />
+        <div className={styles.background}>
+          {/* QR code modal */}
+          <Modal handleClose={() => setIsModalOpen(false)} isActive={isModalOpen}>
+            <div style={{paddingBottom: 20}}>
+              {<QRCode value={donationUrl} size={256} />}
+            </div>
+          </Modal>
+
+          <div className={styles.columnFlex}>
           <div className={styles.heading}>
             Balance
-            <h1 className={styles.subtitle}>$10000000000</h1>
+            <h1 className={styles.subtitle}>{`$${data.restaurant.balance}`}</h1>
           </div>
           <div className={styles.columnFlex}>
             <div className={styles.formContainer}>
               <h1 className={styles.title}>New Claim</h1>
-              <p className={styles.subtitle}>Restaurant ABC</p>
+              <p className={styles.subtitle}>{data.restaurant.name}</p>
               <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.inputContainer}>
                   <input
