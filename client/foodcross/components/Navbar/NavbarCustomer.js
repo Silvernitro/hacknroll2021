@@ -3,8 +3,10 @@ import { ButtonPrimary } from '../Button/ButtonPrimary';
 import style from './Navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { config, library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCocktail, faCoffee, fas, faTimes, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { ButtonOutline } from '../Button/ButtonOutline';
+import Link from 'next/link';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -35,22 +37,24 @@ function Navbar() {
     <>
       <nav className={style.navbar}>
         <div className={style.navbarContainer}>
-          <div className={style.navbarLogo} onClick={closeMobileMenu}>
-            FoodCross
-          </div>
+          <Link to href="/">
+            <div className={style.navbarLogo} onClick={closeMobileMenu}>
+              FoodCross
+            </div>
+          </Link>
           <div className={style.menuIcon} onClick={handleClick}>
-            <FontAwesomeIcon icon={['fas', 'fa-times']} />
-            <FontAwesomeIcon icon={click ? ['fas', 'fa-times'] : ['fas', 'fa-bars']} />
+            <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
           <ul className={style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
-              <FontAwesomeIcon icon={['fas', 'fa-times']} />
+                <Link to href="/">
                 Home
+                </Link>
               </div>
             </li>
           </ul>
-          {button && <ButtonPrimary buttonStyle='style.btn--outline'>Contact</ButtonPrimary>}
+          <FontAwesomeIcon icon={faUserCircle} />
         </div>
       </nav>
     </>
