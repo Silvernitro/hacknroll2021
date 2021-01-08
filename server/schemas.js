@@ -35,7 +35,7 @@ const typeDefs = gql`
   input DonationInput {
     donor_id: String!
     restaurant_id: String!
-    amount: Int!
+    amount: Float!
   }
 
   input ClaimInput {
@@ -52,7 +52,7 @@ const typeDefs = gql`
 
   input ItemInput {
     name: String!
-    price: Int!
+    price: Float!
   }
 
   input MenuInput {
@@ -72,7 +72,7 @@ const typeDefs = gql`
     donations: [Donation!]!
     profile_pic: String
     qr_code: String
-    balance: Int!
+    balance: Float!
   }
 
   type Menu {
@@ -87,7 +87,7 @@ const typeDefs = gql`
     phone: String!
     card: Card
     donations: [Donation!]!
-    totalDonations: Int!
+    totalDonations: Float!
   }
 
   type Card {
@@ -97,12 +97,12 @@ const typeDefs = gql`
   }
 
   type Donation {
-    amount: Int!
+    amount: Float!
     date: String!
   }
 
   type Item {
-    price: Int!
+    price: Float!
     name: String!
   }
 
