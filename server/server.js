@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const mongoose = require('mongoose');
-require('dotenv').config()
+require('dotenv').config();
 
 mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true});
 const db = mongoose.connection;
@@ -11,7 +11,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("DB connected.");
 });
-
 
 // Some fake data
 const books = [
@@ -55,3 +54,24 @@ app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 app.listen(4000, () => {
   console.log('Go to http://localhost:4000/graphiql to run queries!');
 });
+
+// Testing schema validity
+
+const { Restaurant, MenuItem } = require('./models/restaurants');
+
+// const testItem = new MenuItem({
+//   name: "Sandwich",
+//   price: 10
+// });
+
+// const testRestaurant = new Restaurant({
+//   name: "Hello",
+//   email: "hello@contact",
+//   password: "123456",
+//   description: "hello desc",
+//   phone: "65193812",
+//   menu: [ new mongoose.Types.ObjectId("5ff7ef32a32cfe0b5f980da8") ]
+// });
+
+// testRestaurant.save();
+
