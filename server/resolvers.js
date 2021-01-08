@@ -4,7 +4,7 @@ module.exports = {
       dataSources.restaurantAPI.getAllRestaurants()
     ),
     restaurant: async (_, { id }, { dataSources }) => {
-      return dataSources.restaurantAPI.getRestaurantById({id});
+      return dataSources.restaurantAPI.getRestaurantById({ id });
     },
     customer: async (_, { id }, { dataSources }) => {
       return dataSources.customerAPI.getCustomerById({id});
@@ -12,6 +12,7 @@ module.exports = {
   },
   Mutation: {
     createRestaurant: async (_, { restaurantInput }, { dataSources }) => {
+      console.log(restaurantInput);
       return dataSources.restaurantAPI.createRestaurant(restaurantInput);
     },
     createCustomer: async (_, { customerInput }, { dataSources }) => {

@@ -28,7 +28,7 @@ const restaurantSchema = new Schema({
   menu: [
     {
       type: Schema.ObjectId,
-      ref: 'MenuItem',
+      ref: 'Menuitem',
     }
   ],
   claims: [

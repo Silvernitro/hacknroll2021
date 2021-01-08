@@ -12,7 +12,7 @@ class CustomerAPI extends DataSource {
 
   async getCustomerById({ id }) {
     try {
-      return Customer.findById(id)
+      return Customer.findById(id).populate('donations')
         .then(doc => this.customerReducer(doc));
     } catch (err) {
       console.log(`Unable to get customer information, \n ${err}`);
@@ -70,7 +70,10 @@ class CustomerAPI extends DataSource {
         date: "11/11/2021",
         number: "209312094",
       },
-      donations: customer.donations || [],
+      donations: customer.donations.map(donation => ({
+        amount: donation.amount,
+        date: donation.createdAt
+      })) || [],
       totalDonations: customer.totalDonations || 0,
     };
   }
