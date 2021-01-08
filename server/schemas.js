@@ -19,7 +19,7 @@ const typeDefs = gql`
   input UserInput {
     email: String!
     password: String!
-    role: UserRole
+    role: String!
   }
 
   input RestaurantInput {
@@ -69,15 +69,10 @@ const typeDefs = gql`
 
   type LoginResponse {
     success: Boolean!
-    id: String!
+    id: String
     token: String
-    role: UserRole
+    role: String
     message: String
-  }
-
-  enum UserRole {
-    CUSTOMER
-    RESTAURANT
   }
 
   type RestaurantUpdateResponse {

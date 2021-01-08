@@ -33,23 +33,16 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) =>{
-    // // get the user token from the headers
-    // const token = req.headers.authentication || '';
+    // get the user token from the headers
+    const token = req.headers.authentication || '';
 
-    // // try to retrieve a user with the token
-    // const user = await getUser(token);
+    // try to retrieve a user with the token
+    const user = await getUser(token);
 
-    // // optionally block the user
-    // // we could also check user roles/permissions here
-    // // if (!user) throw new AuthenticationError('you must be logged in to query this schema');
-
-    // // add the user to the context
-    // return {
-    //   user,
-    //   models: {
-    //     User: generateUserModel({ user }),
-    //   }
-    // };
+    // add the user to the context
+    return {
+      user,
+    };
    },
   dataSources: () => ({
     restaurantAPI: new RestaurantAPI(),
