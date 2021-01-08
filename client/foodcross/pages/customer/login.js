@@ -30,11 +30,10 @@ const Login = (props) => {
     data.role = "CUSTOMER";
 
     loginCustomer({ variables: { userInput: data } }).then((res) => {
-      console.log(res);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userId", res.data.id);
+      localStorage.setItem("token", res.data.login.token);
+      localStorage.setItem("userId", res.data.login.id);
       isLoggedInVar(true);
-      idVar(res.data.id);
+      idVar(res.data.login.id);
       Router.push("/customer/main");
     });
   };
