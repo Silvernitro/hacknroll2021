@@ -8,12 +8,31 @@
 }
 
 .main {
-  padding: 5rem 0;
+  margin-top: 55px;
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.landingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.aboutContainer  {
+  width: 30%;
+  margin-left: 120px;
+  margin-bottom: 100px;
 }
 
 .footer {
@@ -33,4 +52,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 880px) {
+  .landingContainer {
+    flex-direction: column;
+  }
+
+  .aboutContainer {
+    margin: 0 0 0 0;
+    width: 60%;
+  }
 }
