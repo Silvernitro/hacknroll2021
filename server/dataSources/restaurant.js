@@ -33,11 +33,8 @@ class RestaurantAPI extends DataSource {
         location,
       };
       const newRestaurant = new Restaurant(restaurantDetails);
-      await newRestaurant.save();
-      return this.restaurantReducer({
-        _id: newRestaurant._id,
-        ...restaurantDetails
-      })
+      const document = await newRestaurant.save();
+      return document
     } catch (err) {
       console.log(`Unable to create restaurant, \n ${err}`);
     }

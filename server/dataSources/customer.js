@@ -42,11 +42,8 @@ class CustomerAPI extends DataSource {
         },
       }
       const newCustomer = new Customer(customerDetails);
-      await newCustomer.save();
-      return this.customerReducer({
-        _id: newCustomer._id,
-        ...customerDetails
-      })
+      const document = await newCustomer.save();
+      return document;
     } catch (err) {
       console.log(`Unable to create customer, \n ${err}`);
     }
