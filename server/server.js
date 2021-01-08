@@ -12,6 +12,7 @@ const resolvers = require("./resolvers");
 const RestaurantAPI = require("./dataSources/restaurant");
 const CustomerAPI = require("./dataSources/customer");
 const DonationAPI = require("./dataSources/donation");
+const ClaimAPI = require("./dataSources/claim");
 
 require("dotenv").config();
 
@@ -32,6 +33,7 @@ const server = new ApolloServer({
     restaurantAPI: new RestaurantAPI(),
     customerAPI: new CustomerAPI(),
     donationAPI: new DonationAPI(),
+    claimAPI: new ClaimAPI(),
   }),
 });
 

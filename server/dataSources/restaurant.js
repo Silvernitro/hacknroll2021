@@ -46,8 +46,23 @@ class RestaurantAPI extends DataSource {
     return Restaurant.findByIdAndUpdate(
         restaurant_id,
         {
-          $push: { donations: donation_id},
+          $push: { donations: donation_id },
           $inc: { balance: amount }
+        }
+      );
+  }
+
+  async addClaimToRestaurant({
+    item: {
+      price
+    },
+    id: claim_id
+  }, restaurant_id) {
+    return Restaurant.findByIdAndUpdate(
+        restaurant_id,
+        {
+          $push: { claims: claim_id },
+          $inc: { balance: -price }
         }
       );
   }
