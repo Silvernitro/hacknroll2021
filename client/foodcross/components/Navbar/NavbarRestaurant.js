@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '../Button/ButtonPrimary';
-import './Navbar.css';
+import { ButtonPrimary } from '../Button/ButtonPrimary';
+import style from './Navbar.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { config, library } from '@fortawesome/fontawesome-svg-core';
+import { faBars, faCocktail, faCoffee, fas, faTimes, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { ButtonOutline } from '../Button/ButtonOutline';
+import Link from 'next/link';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -11,10 +16,12 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
 
   const showButton = () => {
-    if(window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
+    if (typeof window != 'undefined') {
+      if(window.innerWidth <= 960) {
+        setButton(false);
+      } else {
+        setButton(true);
+      }
     }
   };
 
@@ -22,31 +29,37 @@ function Navbar() {
     showButton();
   }, [])
 
-  window.addEventListener('resize', showButton);
+  if (typeof window != 'undefined') {
+    window.addEventListener('resize', showButton);
+  } 
 
   return (
     <>
-      <nav className='navbar'>
-        <div className='navbar-container'>
-          <Link to="/" className='navbar-logo' onClick={closeMobileMenu}>
-            Whleee 
+      <nav className={style.navbar}>
+        <div className={style.navbarContainer}>
+          <Link to href="/">
+            <div className={style.navbarLogo} onClick={closeMobileMenu}>
+              FoodCross
+            </div>
           </Link>
-          <div className='menu-icon' onClick={handleClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+          <div className={style.menuIcon} onClick={handleClick}>
+            <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+          <ul className={style.navMenu}>
+            <li className={style.navItem}>
+              <div className={style.navLinks} onClick={closeMobileMenu}>
+                <Link to href="/">
                 Home
-              </Link>
+                </Link>
+              </div>
             </li>
-            <li className='nav-item'>
-              <Link to='/about' className='nav-links' onClick={closeMobileMenu}>
+            <li className={style.navItem}>
+              <div className={style.navLinks} onClick={closeMobileMenu}>
                 Menu
-              </Link>
+              </div>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>Contact</Button>}
+          <FontAwesomeIcon icon={faUserCircle} />
         </div>
       </nav>
     </>

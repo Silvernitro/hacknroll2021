@@ -15,8 +15,9 @@ export default function Home() {
           <div className={styles.aboutContainer}>
             <p className={styles.title}>FoodCross</p>
             <p>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout.{" "}
+              In 2020, 10.4% of Singaporean Households faced food insecurity at
+              least once during the year. Join FoodCross today and help feed
+              families in need.
             </p>
             <p
               style={{ color: "#4D7A33", fontWeight: "bold", fontSize: "24px" }}

@@ -37,7 +37,7 @@ function Navbar() {
     <>
       <nav className={style.navbar}>
         <div className={style.navbarContainer}>
-          <Link to href="/">
+          <Link href="/">
             <div className={style.navbarLogo} onClick={closeMobileMenu}>
               FoodCross
             </div>
@@ -46,7 +46,7 @@ function Navbar() {
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
           <ul className={style.navMenu}>
-            <li className={style.navItem}>
+          <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
                 <Link to href="/">
                 Home
@@ -54,8 +54,10 @@ function Navbar() {
               </div>
             </li>
           </ul>
-          <FontAwesomeIcon icon={faUserCircle} />
         </div>
+        <div className={style.profileIcon}>
+            <FontAwesomeIcon icon={faUserCircle} />
+          </div>
       </nav>
     </>
   );
