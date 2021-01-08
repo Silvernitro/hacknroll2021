@@ -60,7 +60,7 @@ function Navbar({ toggleQrModal }) {
                 </Link>
               </div>
             </li>
-            <li>
+            <li className={style.navItem}>
               <div className={style.navLinks} onClick={toggleQrModal}>
                 QR Code
               </div>
