@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "../../../styles/Donations.module.css";
 import { gql, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
