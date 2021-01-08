@@ -16,7 +16,8 @@
     border: 1px solid var(--primary);
     font-size: 16px;
     border-radius: 2px;
-    padding: 8px 20px
+    padding: 8px 20px;
+    cursor: pointer;
   }
   
   .btnOutline {
@@ -27,6 +28,7 @@
     transition: all 0.3s ease-out;
     border-radius: 2px;
     font-size: 16px;
+    cursor: pointer;
   }
   
   .btnMedium {
@@ -39,10 +41,9 @@
     font-size: 20px;
   }
   
-  .btn--medium:hover, 
-  .btn--large:hover {
-    background: #fff;
-    color: #242424;
+  .btnOutline:hover {
+    background: #4D7A33;
+    color:#ffffff;
     transition: all 0.3s ease-out;
     transition: 250ms;
   }
