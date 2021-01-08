@@ -15,14 +15,13 @@ const Login = (props) => {
     <div className={styles.background}>
       <div className={styles.formContainer}>
         <h1 className={styles.title}>FoodCross</h1>
-        <p className={styles.subtitle}>@customer</p>
+        <p className={styles.subtitle}>@donor</p>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.inputContainer}>
             <input
               className={styles.input}
               name="email"
               placeholder="Email"
-              defaultValue="test"
               ref={register}
             />
             {errors.exampleRequired && <span>This field is required</span>}

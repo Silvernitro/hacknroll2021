@@ -22,7 +22,6 @@ const Login = (props) => {
               className={styles.input}
               name="email"
               placeholder="Email"
-              defaultValue="test"
               ref={register}
             />
             {errors.exampleRequired && <span>This field is required</span>}
