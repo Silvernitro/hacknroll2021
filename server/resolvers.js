@@ -12,11 +12,32 @@ module.exports = {
   },
   Mutation: {
     createRestaurant: async (_, { restaurantInput }, { dataSources }) => {
-      console.log(restaurantInput);
-      return dataSources.restaurantAPI.createRestaurant(restaurantInput);
+      try {
+        return dataSources.restaurantAPI.createRestaurant(restaurantInput)
+          .then(result => ({
+            restaurant: result,
+            success: true
+          }));
+      } catch (err) {
+        console.log(err);
+        return {
+          success: false
+        }
+      }
     },
     createCustomer: async (_, { customerInput }, { dataSources }) => {
-      return dataSources.customerAPI.createCustomer(customerInput);
+      try {
+        return dataSources.customerAPI.createCustomer(customerInput)
+          .then(result => ({
+            customer: result,
+            success: true
+          }));
+      } catch (err) {
+        console.log(err);
+        return {
+          success: false
+        }
+      }
     },
     createDonation: async (_, { donationInput }, { dataSources }) => {
       try {
@@ -24,9 +45,16 @@ module.exports = {
         return Promise.all([
           dataSources.restaurantAPI.addDonationToRestaurant(donation),
           dataSources.customerAPI.addDonationToCustomer(donation)
-        ]).then(() => dataSources.donationAPI.donationReducer(donation));
-      } catch (error) {
-        console.log(error);
+        ]).then(() => dataSources.donationAPI.donationReducer(donation))
+          .then((result) => ({
+            donation: result,
+            success: true
+          }));
+      } catch (err) {
+        console.log(err);
+        return {
+          success: false
+        }
       }
     },
     createClaim: async (_, { claimInput }, { dataSources }) => {
@@ -34,9 +62,15 @@ module.exports = {
         const claim = await dataSources.claimAPI.createClaim(claimInput)
           .then(doc => dataSources.claimAPI.claimReducer(doc));
         return dataSources.restaurantAPI.addClaimToRestaurant(claim, claimInput.restaurant_id)
-          .then(() => claim);
-      } catch (error) {
-        console.log(error);
+          .then(() => ({
+            claim,
+            success: true
+          }));
+      } catch (err) {
+        console.log(err);
+        return {
+          success: false
+        }
       }
     },
     addMenuItem: async (_, { menuInput }, { dataSources }) => {
@@ -44,11 +78,17 @@ module.exports = {
         const { restaurant_id, items } = menuInput;
         return dataSources.restaurantAPI.addMenuItemsToRestaurant(restaurant_id, items)
           .then(doc => ({
-            menu: doc.menu,
-            restaurant_id: doc._id
+            menu: {
+              items: doc.menu,
+              restaurant_id: doc._id
+            },
+            success: true
           }));
       } catch (err) {
         console.log(err);
+        return {
+          success: false
+        }
       }
     }
   }
