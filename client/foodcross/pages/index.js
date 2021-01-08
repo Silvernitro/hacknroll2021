@@ -15,7 +15,9 @@ export default function Home() {
           <div className={styles.aboutContainer}>
             <p className={styles.title}>FoodCross</p>
             <p>
-              Join FoodCross in ensuring that everyone gets enough to eat.
+              In 2020, 10.4% of Singaporean Households faced food insecurity at
+              least once during the year. Join FoodCross today and help feed
+              families in need.
             </p>
             <p
               style={{ color: "#4D7A33", fontWeight: "bold", fontSize: "24px" }}
