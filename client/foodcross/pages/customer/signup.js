@@ -15,7 +15,7 @@ const Signup = (props) => {
     <div className={styles.background}>
       <div className={styles.formContainer}>
         <h1 className={styles.title}>Sign Up</h1>
-        <p className={styles.subtitle}>@customer</p>
+        <p className={styles.subtitle}>@donor</p>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.inputContainer}>
             <input

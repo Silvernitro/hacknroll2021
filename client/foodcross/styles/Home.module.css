@@ -24,6 +24,12 @@
   align-items: center;
 }
 
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 .title {
   font-size: 56px;
   margin-bottom: 20px;
