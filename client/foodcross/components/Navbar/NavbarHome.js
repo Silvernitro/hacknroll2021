@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '../Button/Button';
+import { ButtonPrimary } from '../Button/ButtonPrimary';
 import style from './Navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import { faCocktail, faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { ButtonOutline } from '../Button/ButtonOutline';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -53,7 +54,7 @@ function Navbar() {
               </div>
             </li>
           </ul>
-          {button && <Button buttonStyle='style.btn--outline'>Contact</Button>}
+          {button && <ButtonPrimary>Contact</ButtonPrimary>}
         </div>
       </nav>
     </>

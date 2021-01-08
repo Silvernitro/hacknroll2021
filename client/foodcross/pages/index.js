@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import HomeNav from "components/HomeNav/HomeNav";
 import NavbarHome from 'components/Navbar/NavbarHome';
+import { Button } from 'components/Button/ButtonPrimary'
 
 export default function Home() {
   return (

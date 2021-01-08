@@ -1,11 +1,11 @@
 import React from 'react';
 import style from './Button.module.css';
 
-const STYLES = ['btn--primary', 'btn--outline'];
+const STYLES = [style.buttonPrimary, style.buttonOutline];
 
-const SIZES = ['btn--medium', 'btn--large'];
+const SIZES = [style.buttonMedium, style.buttonMedium];
 
-export const Button = ({
+export const ButtonPrimary = ({
   children, 
   type, 
   onClick, 
