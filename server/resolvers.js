@@ -20,12 +20,21 @@ module.exports = {
     createDonation: async (_, { donationInput }, { dataSources }) => {
       try {
         const donation = await dataSources.donationAPI.createDonation(donationInput);
-        dataSources.restaurantAPI.addDonationToRestaurant(donation);
-        dataSources.customerAPI.addDonationToCustomer(donation);
-
-        return dataSources.donationAPI.donationReducer(donation);
+        return Promise.all([
+          dataSources.restaurantAPI.addDonationToRestaurant(donation),
+          dataSources.customerAPI.addDonationToCustomer(donation)
+        ]).then(() => dataSources.donationAPI.donationReducer(donation));
       } catch (error) {
-
+        console.log(error);
+      }
+    },
+    createClaim: async(_, { claimInput }, { dataSources }) => {
+      try {
+        const claim = await dataSources.claimAPI.createClaim(claimInput);
+        return dataSources.restaurantAPI.addClaimToRestaurant(claim)
+          .then(() => dataSources.claimAPI.claimReducer(claim));
+      } catch (error) {
+        console.log(error);
       }
     }
   }

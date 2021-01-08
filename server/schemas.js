@@ -36,6 +36,12 @@ const typeDefs = gql`
     amount: Int!
   }
 
+  input ClaimInput {
+    ic: String!
+    restaurant_id: String!
+    item_id: String!
+  }
+
   input CardInput {
     number: String!
     name: String!

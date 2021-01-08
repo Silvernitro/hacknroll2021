@@ -1,7 +1,7 @@
 const { DataSource } = require("apollo-datasource");
-const Claims = require('../models/claims');
+const Claim = require('../models/claims');
 
-class ClaimsAPI extends DataSource {
+class ClaimAPI extends DataSource {
   constructor() {
     super();
   }
@@ -12,7 +12,7 @@ class ClaimsAPI extends DataSource {
         itemId,
         ic
       }
-      const newClaim = new Claims(claimDetails);
+      const newClaim = new Claim(claimDetails);
       return newClaim.save()
         .then(doc => {
           doc.populate('item')
@@ -22,6 +22,14 @@ class ClaimsAPI extends DataSource {
       console.log(`Unable to create claim, ${err}`);
     }
   }
+
+  claimReducer(claim) {
+    return {
+      item: claim.item,
+      ic: claim.ic,
+      date: claim.createdAt
+    }
+  }
 }
 
-module.exports = ClaimsAPI;
+module.exports = ClaimAPI;
