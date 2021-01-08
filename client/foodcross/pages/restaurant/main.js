@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/RestaurantMain.module.css";
 
 import Link from "next/link";
@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import QRCode from "qrcode.react";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
-import MenuItem from 'components/MenuItem.js/MenuItem.js';
-import Navbar from 'components/Navbar/NavbarRestaurant';
-import Modal from 'components/Modal/Modal';
-import { ButtonOutline } from 'components/Button/ButtonOutline';
+import MenuItem from "components/MenuItem.js/MenuItem.js";
+import Navbar from "components/Navbar/NavbarRestaurant";
+import Modal from "components/Modal/Modal";
+import { ButtonOutline } from "components/Button/ButtonOutline";
 
 const GET_SESSION = gql`
   query getSession {
@@ -76,32 +76,39 @@ function main() {
               <h1 className={styles.title}>New Claim</h1>
               <p className={styles.subtitle}>{data?.name ?? "Your Restaurant"}</p>
               <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-              <div className={styles.menuWrapper}>
-                <MenuItem text="Chicken rice" />
-                <MenuItem text="Lor mee" />
-                <MenuItem text="Ham Jin Beng" />
-              </div>
-              <div className={styles.buttonContainer}>
-                <ButtonPrimary>Claim</ButtonPrimary>
-              </div>
+                <div className={styles.inputContainer}>
+                  <input
+                    className={styles.input}
+                    name="ic"
+                    autocomplete="off"
+                    placeholder="IC Number"
+                    ref={register}
+                  />
+                </div>
+                <div className={styles.menuWrapper}>
+                  <MenuItem text="Chicken rice" />
+                  <MenuItem text="Lor mee" />
+                  <MenuItem text="Ham Jin Beng" />
+                </div>
+                <div className={styles.buttonContainer}>
+                  <ButtonPrimary>Claim</ButtonPrimary>
+                </div>
               </form>
               <div className={styles.signUpContainer}></div>
             </div>
           </div>
         </div>
 
-      <div className={styles.transactions}>
+        <div className={styles.transactions}>
           Past Transactions
           <h1 className={styles.subtitle}></h1>
           <ul className={styles.listItem}>
-            <li>
-              Claimed 1 Chicken rice worth $5 at 10/10/2020 2000
-            </li>
+            <li>Claimed 1 Chicken rice worth $5 at 10/10/2020 2000</li>
           </ul>
+        </div>
       </div>
-    </div>
     </>
-    )
+  );
 }
 
-export default main
+export default main;
