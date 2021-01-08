@@ -1,5 +1,8 @@
 module.exports = {
   Query: {
+    getAllRestaurants: (_, __, { dataSources }) => (
+      dataSources.restaurantAPI.getAllRestaurants()
+    ),
     restaurant: async (_, { id }, { dataSources }) => {
       return dataSources.restaurantAPI.getRestaurantById({id});
     },
@@ -17,7 +20,7 @@ module.exports = {
     createDonation: async (_, { donationInput }, { dataSources }) => {
       try {
         const donation = await dataSources.donationAPI.createDonation(donationInput);
-        ataSources.restaurantAPI.addDonationToRestaurant(donation);
+        dataSources.restaurantAPI.addDonationToRestaurant(donation);
         dataSources.customerAPI.addDonationToCustomer(donation);
 
         return dataSources.donationAPI.donationReducer(donation);

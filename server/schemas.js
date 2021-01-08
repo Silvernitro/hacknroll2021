@@ -2,6 +2,7 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
+    getAllRestaurants: [Restaurant!]!
     restaurant(id: String): Restaurant
     customer(id: String): Customer
   }

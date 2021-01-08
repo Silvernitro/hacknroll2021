@@ -6,6 +6,11 @@ class RestaurantAPI extends DataSource {
     super();
   }
 
+  async getAllRestaurants() {
+    const restaurants = await Restaurant.find({});
+    return restaurants.map(restaurant => this.restaurantReducer(restaurant));
+  }
+
   async getRestaurantById({ id }) {
     try {
       console.log("id" + id);
