@@ -1,5 +1,6 @@
 const { DataSource } = require('apollo-datasource');
-const { Restaurant } = require('../models/restaurants');
+const { Restaurant, MenuItem } = require('../models/restaurants');
+
 
 class RestaurantAPI extends DataSource {
   constructor() {
@@ -90,6 +91,20 @@ class RestaurantAPI extends DataSource {
           $inc: { balance: -price }
         }
       );
+  }
+
+  async addMenuItemsToRestaurant(restaurant_id, items) {
+    try {
+      const insertedIds = await MenuItem.insertMany(items)
+        .then((docs) => docs.map(item => item._id));
+      return Restaurant.findByIdAndUpdate(
+        restaurant_id,
+        { $push: { menu: { $each: insertedIds } } },
+        { new: true }
+      ).populate('menu')
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   restaurantReducer(restaurant) {

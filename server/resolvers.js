@@ -38,6 +38,18 @@ module.exports = {
       } catch (error) {
         console.log(error);
       }
+    },
+    addMenuItem: async (_, { menuInput }, { dataSources }) => {
+      try {
+        const { restaurant_id, items } = menuInput;
+        return dataSources.restaurantAPI.addMenuItemsToRestaurant(restaurant_id, items)
+          .then(doc => ({
+            menu: doc.menu,
+            restaurant_id: doc._id
+          }));
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 }
