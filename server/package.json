@@ -13,7 +13,7 @@
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
-    "apollo-server-express": "^1.4.0",
+    "apollo-server-express": "^2.18.0-rc.1",
     "express": "^4.17.1"
   },
   "scripts": {
