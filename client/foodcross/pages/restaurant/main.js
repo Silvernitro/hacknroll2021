@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
-import { MenuItem } from "components/MenuItem/MenuItem";
+import MenuItem from "components/MenuItem/MenuItem";
 import Navbar from 'components/Navbar/NavbarRestaurant';
 import { ButtonOutline } from 'components/Button/ButtonOutline';
 
@@ -30,15 +30,9 @@ function main() {
               <p className={styles.subtitle}>Restaurant ABC</p>
               <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
               <div className={styles.menuWrapper}>
-                <MenuItem>
-                  Chicken Rice
-                </MenuItem>
-                <MenuItem>
-                  Lor Mee
-                </MenuItem>
-                <MenuItem>
-                  Ham Jin Beng
-                </MenuItem>
+                <MenuItem text="Chicken rice" />
+                <MenuItem text="Lor mee" />
+                <MenuItem text="Ham Jin Beng" />
               </div>
               <div className={styles.buttonContainer}>
                 <ButtonPrimary>Claim</ButtonPrimary>

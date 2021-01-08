@@ -56,6 +56,12 @@ const typeDefs = gql`
     phone: String!
     description: String
     location: String
+    menu: [Item!]!
+    claims: [Claim!]!
+    donations: [Donation!]!
+    profile_pic: String
+    qr_code: String
+    balance: Int!
   }
 
   type Customer {

@@ -6,7 +6,7 @@ const ClaimSchema = new Schema(
   {
     item: {
       type: mongoose.Schema.ObjectId,
-      ref: 'MenuItem',
+      ref: 'Menuitem',
     },
     ic: {
       type: String,
