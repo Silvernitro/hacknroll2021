@@ -4,21 +4,31 @@ import styles from "../../styles/RestaurantMain.module.css";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
+import QRCode from "qrcode.react";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import { MenuItem } from "components/MenuItem/MenuItem";
 import Navbar from 'components/Navbar/NavbarRestaurant';
+import Modal from 'components/Modal/Modal';
 import { ButtonOutline } from 'components/Button/ButtonOutline';
 
 function main() {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   const [click, setClick] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
       <>
-        <Navbar /> 
+        <Navbar toggleQrModal={() => setIsModalOpen(!isModalOpen)} />
         <div className={styles.background}>
+          {/* QR code modal */}
+          <Modal handleClose={() => setIsModalOpen(false)} isActive={isModalOpen}>
+            <div style={{paddingBottom: 20}}>
+              <QRCode value="https://www.google.com" size={256} />
+            </div>
+          </Modal>
+
           <div className={styles.columnFlex}>
           <div className={styles.heading}>
             Balance
@@ -48,14 +58,14 @@ function main() {
             </div>
           </div>
         </div>
-        
+
       <div className={styles.transactions}>
           Past Transactions
           <h1 className={styles.subtitle}></h1>
           <ul className={styles.listItem}>
             <li>
               Claimed 1 Chicken rice worth $5 at 10/10/2020 2000
-            </li> 
+            </li>
           </ul>
       </div>
     </div>
