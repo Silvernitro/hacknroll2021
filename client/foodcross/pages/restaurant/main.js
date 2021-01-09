@@ -64,11 +64,12 @@ const CREATE_CLAIM = gql`
 `
 
 function main() {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
   const [createClaim] = useMutation(CREATE_CLAIM);
 
   const [click, setClick] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClaimed, setIsClaimed] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState("");
 
   let restaurantId = ""
@@ -77,7 +78,7 @@ function main() {
   }
   const donationUrl = `http://localhost:3000/customer/donations/${restaurantId}`;
 
-  const { loading, error, data } = useQuery(GET_RESTAURANT, {
+  const { loading, error, data, refetch } = useQuery(GET_RESTAURANT, {
     variables: { id: restaurantId },
   });
 
@@ -94,6 +95,11 @@ function main() {
       }
     }).then(res => {
       console.log(res);
+      setIsClaimed(true);
+      setSelectedMenuItem("");
+      reset();
+      refetch();
+      setTimeout(() => setIsClaimed(false), 2000);
     }).catch(error => console.error(error))
   }
 
@@ -112,49 +118,53 @@ function main() {
           </Modal>
 
           <div className={styles.columnFlex}>
-          <div className={styles.heading}>
-            Balance
-            <h1 className={styles.subtitle}>{`$${data?.restaurant?.balance ?? 0}`}</h1>
-          </div>
-          <div className={styles.columnFlex}>
-            <div className={styles.formContainer}>
-              <h1 className={styles.title}>New Claim</h1>
-              <p className={styles.subtitle}>{data?.restaurant?.name ?? ""}</p>
-              <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-                <div className={styles.inputContainer}>
-                  <input
-                    className={styles.input}
-                    name="ic"
-                    autoComplete="off"
-                    placeholder="IC Number"
-                    ref={register}
-                  />
-                </div>
-                <div className={styles.menuWrapper}>
-                  {!!data.restaurant && data.restaurant.menu.map(item => {
-                    return (
-                    <MenuItem
-                      key={item.name}
-                      text={item.name}
-                      isSelected={item.id === selectedMenuItem}
-                      onClick={() => setSelectedMenuItem(item.id)}
+            <div className={styles.heading}>
+              Balance
+              <h1 className={styles.subtitle}>{`$${data?.restaurant?.balance ?? 0}`}</h1>
+            </div>
+
+            <div className={styles.columnFlex}>
+              <div className={styles.formContainer}>
+                <h1 className={styles.title}>New Claim</h1>
+                <p className={styles.subtitle}>{data?.restaurant?.name ?? ""}</p>
+                <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+                  <div className={styles.inputContainer}>
+                    <input
+                      className={styles.input}
+                      name="ic"
+                      autoComplete="off"
+                      placeholder="IC Number"
+                      ref={register}
                     />
-                  )})}
+                  </div>
+                  <div className={styles.menuWrapper}>
+                    {!!data.restaurant && data.restaurant.menu.map(item => {
+                      return (
+                      <MenuItem
+                        key={item.name}
+                        text={item.name}
+                        isSelected={item.id === selectedMenuItem}
+                        onClick={() => setSelectedMenuItem(item.id)}
+                      />
+                    )})}
+                  </div>
+                  <div className={styles.buttonContainer}>
+                    <ButtonPrimary>Claim</ButtonPrimary>
+                  </div>
+                </form>
+                <div style={{height: "30px"}}>
+                  {isClaimed && <p style={{color: "red"}}>Claimed!</p>}
                 </div>
-                <div className={styles.buttonContainer}>
-                  <ButtonPrimary>Claim</ButtonPrimary>
-                </div>
-              </form>
-              <div className={styles.signUpContainer}></div>
+                <div className={styles.signUpContainer}></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.transactions}>
-          Past Transactions
-          <ItemList donations={data.restaurant.donations} claims={data.restaurant.claims} />
+          <div className={styles.transactions}>
+            Past Transactions
+            {!!data.restaurant && <ItemList donations={data.restaurant.donations} claims={data.restaurant.claims} /> }
+          </div>
         </div>
-      </div>
     </>
   );
 }

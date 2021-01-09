@@ -18,7 +18,7 @@
   box-shadow: 0px 0px 2px 0px #c9c7aa;
   padding: 2rem 12rem 2rem 10rem;
   border-radius: 5px;
-  margin-top: 10%; 
+  margin-top: 10%;
   text-align: center;
   margin-left: 10%;
   font-weight: bold;
@@ -29,9 +29,9 @@
     background-image: url("../public/donations.jpg");
 
     /* Full height */
-    height: 100%;
+    min-height: 100vh;
     width: 100vw;
-  
+
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
@@ -70,6 +70,8 @@
   margin-bottom: 5%;
   font-weight: bold;
   box-shadow: 0px 0px 2px 0px #c9c7aa;
+  display: flex;
+  flex-direction: column;
 }
 
 .listItem {
@@ -106,10 +108,10 @@
 }
 
 .buttonContainer {
+  width: 100%;
   margin-top: 24px;
-  height: 20px;
-  align-items: center;
-  margin-left: 35px;
+  display: flex;
+  justify-content: center;
 }
 
 .menuWrapper {
@@ -153,7 +155,7 @@
 
 .signUpButton {
   background:none;
-  border:none; 
+  border:none;
   color: #4D7A33;
   font-weight: bold;
   font-size: 14px;
@@ -183,8 +185,8 @@
   }
 
   .heading {
-    margin-right: 3%;
-    margin-left: 3%
+    /* margin-right: 3%;
+    margin-left: 3% */
   }
 
   .transactions {
