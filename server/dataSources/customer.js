@@ -12,8 +12,22 @@ class CustomerAPI extends DataSource {
 
   async getCustomerById({ id }) {
     try {
-      return Customer.findById(id).populate('donations')
-        .then(doc => this.customerReducer(doc));
+      return Customer.findById(id).populate([
+        {
+          path: "donations",
+          populate: [{ path: "restaurant_id" }]
+        }
+      ]).then(doc => {
+        const reduced = this.customerReducer(doc);
+        for (let i = 0; i < reduced.donations.length; i++) {
+          console.log(doc.donations[i].restaurant_id.name)
+          reduced.donations[i] = {
+            ...reduced.donations[i],
+            restaurant_name: doc.donations[i].restaurant_id.name
+          }
+        }
+        return reduced;
+      })
     } catch (err) {
       console.log(`Unable to get customer information, \n ${err}`);
     }

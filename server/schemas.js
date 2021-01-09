@@ -130,7 +130,7 @@ const typeDefs = gql`
     name: String!,
     phone: String!
     card: Card
-    donations: [Donation!]!
+    donations: [DonationHistory!]!
     totalDonations: Float!
   }
 
@@ -138,6 +138,12 @@ const typeDefs = gql`
     number: String!
     name: String!
     date: String!
+  }
+
+  type DonationHistory {
+    amount: Float!
+    date: String!
+    restaurant_name: String
   }
 
   type Donation {
