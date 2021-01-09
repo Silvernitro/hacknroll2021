@@ -76,7 +76,7 @@ function main() {
   if (typeof window !== "undefined") {
     restaurantId = localStorage.getItem("userId");
   }
-  const donationUrl = `http://localhost:3000/customer/donations/${restaurantId}`;
+  const donationUrl = `http://ec2-3-1-201-212.ap-southeast-1.compute.amazonaws.com:3000/customer/donations/${restaurantId}`;
 
   const { loading, error, data, refetch } = useQuery(GET_RESTAURANT, {
     variables: { id: restaurantId },
