@@ -12,6 +12,7 @@ import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import MenuItem from "components/MenuItem.js/MenuItem.js";
 import Navbar from "components/Navbar/NavbarRestaurant";
 import Modal from "components/Modal/Modal";
+import ItemList from "components/Itemlist/ItemList"
 import { ButtonOutline } from "components/Button/ButtonOutline";
 
 const GET_SESSION = gql`
@@ -113,12 +114,12 @@ function main() {
           <div className={styles.columnFlex}>
           <div className={styles.heading}>
             Balance
-            <h1 className={styles.subtitle}>{`$${data.restaurant.balance}`}</h1>
+            <h1 className={styles.subtitle}>{`$${data?.restaurant?.balance ?? 0}`}</h1>
           </div>
           <div className={styles.columnFlex}>
             <div className={styles.formContainer}>
               <h1 className={styles.title}>New Claim</h1>
-              <p className={styles.subtitle}>{data.restaurant.name}</p>
+              <p className={styles.subtitle}>{data?.restaurant?.name ?? ""}</p>
               <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.inputContainer}>
                   <input
@@ -130,7 +131,7 @@ function main() {
                   />
                 </div>
                 <div className={styles.menuWrapper}>
-                  {data.restaurant.menu.map(item => {
+                  {!!data.restaurant && data.restaurant.menu.map(item => {
                     return (
                     <MenuItem
                       key={item.name}
@@ -151,10 +152,7 @@ function main() {
 
         <div className={styles.transactions}>
           Past Transactions
-          <h1 className={styles.subtitle}></h1>
-          <ul className={styles.listItem}>
-            <li>Claimed 1 Chicken rice worth $5 at 10/10/2020 2000</li>
-          </ul>
+          <ItemList donations={data.restaurant.donations} claims={data.restaurant.claims} />
         </div>
       </div>
     </>
