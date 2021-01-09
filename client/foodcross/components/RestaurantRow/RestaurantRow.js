@@ -4,7 +4,8 @@ import style from "./RestaurantRow.module.css";
 import Link from "next/link";
 
 const RestaurantRow = (props) => {
-  const { imageUrl, name, balance, id } = props.restaurant;
+  console.log(props.restaurant);
+  const { profile_pic, name, balance, id } = props.restaurant;
 
   return (
     <div className={style.rowContainer}>
@@ -14,7 +15,7 @@ const RestaurantRow = (props) => {
             <img
               className={style.images}
               alt={name}
-              src="https://source.unsplash.com/1600x900/?food"
+              src={profile_pic !== null ? profile_pic : ""}
             ></img>
           </div>
         </a>
