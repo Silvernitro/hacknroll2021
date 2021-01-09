@@ -3,6 +3,9 @@ import styles from "../../styles/Signup.module.css";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { isLoggedInVar, idVar } from "../../cache";
+
+import Router from "next/router";
 
 import { useForm } from "react-hook-form";
 
@@ -11,10 +14,10 @@ import { ButtonPrimary } from "components/Button/ButtonPrimary";
 const SIGNUP_RESTAURANT = gql`
   mutation CreateRestaurant($restaurantInput: RestaurantInput) {
     createRestaurant(restaurantInput: $restaurantInput) {
-      name
-      email
-      phone
-      location
+      success
+      restaurant {
+        id
+      }
     }
   }
 `;
@@ -24,9 +27,13 @@ const Signup = (props) => {
   const [addRestaurant, { data }] = useMutation(SIGNUP_RESTAURANT);
 
   const onSubmit = (formData) => {
-    addRestaurant({ variables: { restaurantInput: formData } }).then((res) =>
-      console.log(res)
-    );
+    addRestaurant({ variables: { restaurantInput: formData } }).then((res) => {
+      console.log(res);
+      localStorage.setItem("userId", res.data.createRestaurant.restaurant.id);
+      isLoggedInVar(true);
+      idVar(res.data.createRestaurant.restaurant.id);
+      Router.push("/restaurant/main");
+    });
   };
 
   return (
