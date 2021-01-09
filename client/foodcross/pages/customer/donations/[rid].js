@@ -3,11 +3,12 @@ import styles from "../../../styles/Donations.module.css";
 import { gql, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useMutation } from "@apollo/react-hooks";
 
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import Navbar from "components/Navbar/NavbarDonations";
 
-const GET_RESTAURANTS = gql`
+const GET_RESTAURANT = gql`
   query GetRestaurant($id: String) {
     restaurant(id: $id) {
       name
@@ -16,18 +17,59 @@ const GET_RESTAURANTS = gql`
   }
 `;
 
+const GET_SESSION = gql`
+  query getSession {
+    isLoggedIn @client
+    id @client
+  }
+`
+
+const DONATE = gql`
+  mutation donate($input: DonationInput) {
+    createDonation(donationInput: $input) {
+      success
+      donation {
+        amount
+        date
+      }
+      message
+    }
+  }
+`
+
 function donations(props) {
   const router = useRouter();
   const { rid } = router.query;
-  const { loading, error, data } = useQuery(GET_RESTAURANTS, {
+  let user_id = ""
+  if (typeof window !== "undefined") {
+    user_id = localStorage.getItem("userId");
+  }
+
+  const { loading, error, data } = useQuery(GET_RESTAURANT, {
     variables: { id: rid },
   });
+
+  const [createDonation] = useMutation(DONATE);
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = ({amount}) => {
+    const payload = {
+      donor_id: user_id,
+      restaurant_id: rid,
+      amount: parseInt(amount)
+    }
 
-  if (loading) return null;
-  if (error) return `Error! ${error}`;
+    createDonation({
+      variables: {
+        input: payload
+      }
+    }).then(res => {
+      console.log(res)
+    })
+  }
+
+  if (loading || !user_id) return null;
+  if (error || !user_id) return `Error! ${error}`;
 
   return (
     <>

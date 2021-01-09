@@ -39,6 +39,7 @@ class RestaurantAPI extends DataSource {
           path: 'donations'
         }
       ])
+      console.log(restaurant);
 
       return this.restaurantReducer(restaurant);
     } catch (error) {
@@ -82,7 +83,7 @@ class RestaurantAPI extends DataSource {
     item: {
       price
     },
-    id: claim_id
+    _id: claim_id
   }, restaurant_id) {
     return Restaurant.findByIdAndUpdate(
         restaurant_id,
@@ -115,7 +116,12 @@ class RestaurantAPI extends DataSource {
       phone: restaurant.phone || "+65 1231 1234",
       description: restaurant.description || "This is a sample description",
       location: restaurant.location || "123 Avenue 1",
-      menu: restaurant.menu,
+      // menu: restaurant.menu,
+      menu: restaurant.menu.map(item => ({
+        id: item?._id,
+        name: item?.name,
+        price: item?.price
+      })),
       claims: restaurant.claims.map(claim => ({
         item: claim.item,
         ic: claim.ic,

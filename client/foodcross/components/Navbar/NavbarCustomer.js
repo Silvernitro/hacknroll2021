@@ -16,7 +16,7 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
 
   const showButton = () => {
-    if (typeof window != 'undefined') {
+    if (typeof window !== "undefined") {
       if(window.innerWidth <= 960) {
         setButton(false);
       } else {
@@ -45,7 +45,7 @@ function Navbar() {
           <div className={style.menuIcon} onClick={handleClick}>
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
-          <ul className={style.navMenu}>
+          <ul className={click ? style.navMenuActive : style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
                 <Link to href="/customer/main">

@@ -45,7 +45,7 @@ function Navbar({ toggleQrModal }) {
           <div className={style.menuIcon} onClick={handleClick}>
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
-          <ul className={style.navMenu}>
+          <ul className={click ? style.navMenuActive : style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
                 <Link to href="/restaurant/main">

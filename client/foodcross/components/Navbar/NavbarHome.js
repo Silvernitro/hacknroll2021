@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonPrimary } from '../Button/ButtonPrimary';
 import style from './Navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { config, library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faCocktail, faCoffee, fas, faTimes, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { ButtonOutline } from '../Button/ButtonOutline';
 import Link from 'next/link';
 
 function Navbar() {
@@ -45,7 +41,7 @@ function Navbar() {
           <div className={style.menuIcon} onClick={handleClick}>
             <FontAwesomeIcon icon={click ? faTimes : faBars} />
           </div>
-          <ul className={style.navMenu}>
+          <ul className={click ? style.navMenuActive : style.navMenu}>
             <li className={style.navItem}>
               <div className={style.navLinks} onClick={closeMobileMenu}>
                 <Link to href="/">

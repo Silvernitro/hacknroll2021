@@ -4,6 +4,7 @@ import styles from "../../styles/RestaurantMain.module.css";
 import Link from "next/link";
 
 import { gql, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "react-hook-form";
 import QRCode from "qrcode.react";
 
@@ -11,55 +12,134 @@ import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import MenuItem from "components/MenuItem.js/MenuItem.js";
 import Navbar from "components/Navbar/NavbarRestaurant";
 import Modal from "components/Modal/Modal";
+import ItemList from "components/Itemlist/ItemList"
 import { ButtonOutline } from "components/Button/ButtonOutline";
 
-const ID = gql`
-  query Id {
+const GET_SESSION = gql`
+  query getSession {
+    isLoggedIn @client
     id @client
+  }
+`
+
+const GET_RESTAURANT = gql`
+  query GetRestaurant($id: String) {
+    restaurant(id: $id) {
+      id
+      name
+      email
+      phone
+      menu {
+        id
+        price
+        name
+      }
+      claims {
+        item {
+          price
+          name
+        }
+        date
+      }
+      donations {
+        amount
+        date
+      }
+      balance
+    }
   }
 `;
 
+const CREATE_CLAIM = gql`
+  mutation createClaim($input: ClaimInput) {
+    createClaim(claimInput: $input) {
+      success
+      claim {
+        item {
+          id
+        }
+      }
+    }
+  }
+`
+
 function main() {
-  const { data } = useQuery(ID);
-  console.log(data);
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [createClaim] = useMutation(CREATE_CLAIM);
+
   const [click, setClick] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState("");
+
+  let restaurantId = ""
+  if (typeof window !== "undefined") {
+    restaurantId = localStorage.getItem("userId");
+  }
+  const donationUrl = `http://localhost:3000/customer/donations/${restaurantId}`;
+
+  const { loading, error, data } = useQuery(GET_RESTAURANT, {
+    variables: { id: restaurantId },
+  });
+
+  const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      restaurant_id: restaurantId,
+      item_id: selectedMenuItem
+    }
+
+    createClaim({
+      variables: {
+        input: payload
+      }
+    }).then(res => {
+      console.log(res);
+    }).catch(error => console.error(error))
+  }
+
+  if (loading) return null;
+  if (error) return `Error ${error}`;
 
   return (
-    <>
-      <Navbar toggleQrModal={() => setIsModalOpen(!isModalOpen)} />
-      <div className={styles.background}>
-        {/* QR code modal */}
-        <Modal handleClose={() => setIsModalOpen(false)} isActive={isModalOpen}>
-          <div style={{ paddingBottom: 20 }}>
-            <QRCode value="https://www.google.com" size={256} />
-          </div>
-        </Modal>
-        <div className={styles.columnFlex}>
+      <>
+        <Navbar toggleQrModal={() => setIsModalOpen(!isModalOpen)} />
+        <div className={styles.background}>
+          {/* QR code modal */}
+          <Modal handleClose={() => setIsModalOpen(false)} isActive={isModalOpen}>
+            <div style={{paddingBottom: 20}}>
+              {<QRCode value={donationUrl} size={256} />}
+            </div>
+          </Modal>
+
+          <div className={styles.columnFlex}>
           <div className={styles.heading}>
             Balance
-            <h1 className={styles.subtitle}>$10000000000</h1>
+            <h1 className={styles.subtitle}>{`$${data?.restaurant?.balance ?? 0}`}</h1>
           </div>
           <div className={styles.columnFlex}>
             <div className={styles.formContainer}>
               <h1 className={styles.title}>New Claim</h1>
-              <p className={styles.subtitle}>Restaurant ABC</p>
+              <p className={styles.subtitle}>{data?.restaurant?.name ?? ""}</p>
               <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.inputContainer}>
                   <input
                     className={styles.input}
                     name="ic"
-                    autocomplete="off"
+                    autoComplete="off"
                     placeholder="IC Number"
                     ref={register}
                   />
                 </div>
                 <div className={styles.menuWrapper}>
-                  <MenuItem text="Chicken rice" />
-                  <MenuItem text="Lor mee" />
-                  <MenuItem text="Ham Jin Beng" />
+                  {!!data.restaurant && data.restaurant.menu.map(item => {
+                    return (
+                    <MenuItem
+                      key={item.name}
+                      text={item.name}
+                      isSelected={item.id === selectedMenuItem}
+                      onClick={() => setSelectedMenuItem(item.id)}
+                    />
+                  )})}
                 </div>
                 <div className={styles.buttonContainer}>
                   <ButtonPrimary>Claim</ButtonPrimary>
@@ -72,10 +152,7 @@ function main() {
 
         <div className={styles.transactions}>
           Past Transactions
-          <h1 className={styles.subtitle}></h1>
-          <ul className={styles.listItem}>
-            <li>Claimed 1 Chicken rice worth $5 at 10/10/2020 2000</li>
-          </ul>
+          <ItemList donations={data.restaurant.donations} claims={data.restaurant.claims} />
         </div>
       </div>
     </>

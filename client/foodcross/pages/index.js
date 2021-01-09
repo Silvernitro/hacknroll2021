@@ -17,6 +17,7 @@ const GET_RESTAURANTS = gql`
       name
       location
       balance
+      profile_pic
     }
   }
 `;
@@ -77,12 +78,14 @@ export default function Home() {
             *Help donate to restaurants with a low balance. Every cent counts
             towards giving someone else a much needed meal.
           </p>
-          <div style={{marginBottom: "10px", marginTop: "20px"}}>
+          <div style={{ marginBottom: "10px", marginTop: "20px" }}>
             {isAscending && (
               <ButtonPrimary
                 onClick={() => {
                   setRestaurants(
-                    restaurants.sort((r1, r2) => r1.balance - r2.balance)
+                    restaurants.slice().sort((r1, r2) => {
+                      return r1.balance - r2.balance;
+                    })
                   );
                   setIsAscending(false);
                 }}
@@ -94,7 +97,9 @@ export default function Home() {
               <ButtonPrimary
                 onClick={() => {
                   setRestaurants(
-                    restaurants.sort((r1, r2) => r2.balance - r1.balance)
+                    restaurants.slice().sort((r1, r2) => {
+                      return r2.balance - r1.balance;
+                    })
                   );
                   setIsAscending(true);
                 }}
