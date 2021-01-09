@@ -12,7 +12,6 @@ import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import MenuItem from "components/MenuItem.js/MenuItem.js";
 import Navbar from "components/Navbar/NavbarRestaurant";
 import Modal from "components/Modal/Modal";
-import ItemList from "components/Itemlist/ItemList"
 import { ButtonOutline } from "components/Button/ButtonOutline";
 
 const GET_SESSION = gql`
@@ -62,6 +61,42 @@ const CREATE_CLAIM = gql`
     }
   }
 `
+
+
+function ItemList({ donations, claims }) {
+  const items = [];
+  donations.forEach(donation => {
+    items.push({ type: "donation", ...donation});
+  })
+
+  claims.forEach(claim => {
+    items.push({ type: "claim", ...claim});
+  })
+
+  items.sort((a, b) => {
+    return a.date < b.date
+      ? -1
+      : a.date > b.date
+        ? 1
+        : 0
+  })
+
+  return (
+    <ul className={styles.listItem}>
+      {items.map(item => {
+        const date = new Date(parseInt(item.date));
+
+        if (item.type === "donation") {
+          return <li key={item.date}>{`Received $${item.amount} on ${date.toDateString()}`}</li>
+        } else {
+          return <li key={item.date}>
+            {`Claimed ${item.item.name} ($${item.item.price}) on ${date.toDateString()}`}
+            </li>
+        }
+      })}
+    </ul>
+  )
+}
 
 function main() {
   const { register, handleSubmit, errors, reset } = useForm();
