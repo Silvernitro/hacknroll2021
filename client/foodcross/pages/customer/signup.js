@@ -3,6 +3,9 @@ import styles from "../../styles/Signup.module.css";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { isLoggedInVar, idVar } from "../../cache";
+
+import Router from "next/router";
 
 import { useForm } from "react-hook-form";
 
@@ -11,9 +14,10 @@ import { ButtonPrimary } from "components/Button/ButtonPrimary";
 const SIGNUP_CUSTOMER = gql`
   mutation CreateCustomer($customerInput: CustomerInput) {
     createCustomer(customerInput: $customerInput) {
-      name
-      email
-      phone
+      success
+      customer {
+        id
+      }
     }
   }
 `;
@@ -37,9 +41,12 @@ const Signup = (props) => {
       },
     };
 
-    createCustomer({ variables: { customerInput: formData } }).then((res) =>
-      console.log(res)
-    );
+    createCustomer({ variables: { customerInput: formData } }).then((res) => {
+      localStorage.setItem("userId", res.data.createCustomer.customer.id);
+      isLoggedInVar(true);
+      idVar(res.data.createCustomer.customer.id);
+      Router.push("/customer/main");
+    });
   };
 
   return (
