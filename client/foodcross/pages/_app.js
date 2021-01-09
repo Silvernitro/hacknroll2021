@@ -18,7 +18,7 @@ export const typeDefs = gql`
 function MyApp({ Component, pageProps }) {
   const client = new ApolloClient({
     cache,
-    uri: "http://localhost:4000/graphql",
+    uri: "http://ec2-54-251-77-164.ap-southeast-1.compute.amazonaws.com:4000/graphql",
     headers: {
       authorization:
         typeof window !== "undefined"
