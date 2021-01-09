@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../../styles/Donations.module.css";
 import { gql, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
@@ -51,6 +51,8 @@ function donations(props) {
 
   const [createDonation] = useMutation(DONATE);
   const { register, handleSubmit, errors } = useForm();
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const onSubmit = ({amount}) => {
     const payload = {
@@ -64,6 +66,8 @@ function donations(props) {
         input: payload
       }
     }).then(res => {
+      setSuccess(true)
+      setSuccessMessage(`You've donated $${res.data.createDonation.donation.amount}.`);
       console.log(res)
     })
   }
@@ -76,23 +80,38 @@ function donations(props) {
       <Navbar />
       <div className={styles.background}>
         <div className={styles.formContainer}>
-          <h1 className={styles.title}>Donate Now</h1>
-          <p className={styles.subtitle}>{data.restaurant.name}</p>
-          <p className={styles.subtitle}>{data.restaurant.location}</p>
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.inputContainer}>
-              <input
-                className={styles.input}
-                name="amount"
-                placeholder="Amount to Donate"
-                ref={register}
-              />
-              {errors.exampleRequired && <span>This field is required</span>}
+
+          {/* show thank you message after successful donation */}
+          {success && (
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+              <h1 className={styles.title}>Thank You!</h1>
+              <p className={styles.subtitle}>{successMessage}</p>
             </div>
-            <div className={styles.buttonContainer}>
-              <ButtonPrimary>Donate</ButtonPrimary>
+          )}
+
+          {/* else show donation form */}
+          {!success && (
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <h1 className={styles.title}>Donate Now</h1>
+                <p className={styles.subtitle}>{data.restaurant.name}</p>
+                <p className={styles.subtitle}>{data.restaurant.location}</p>
+                <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+                  <div className={styles.inputContainer}>
+                    <input
+                      className={styles.input}
+                      name="amount"
+                      placeholder="Amount to Donate"
+                      ref={register}
+                    />
+                    {errors.exampleRequired && <span>This field is required</span>}
+                  </div>
+                  <div className={styles.buttonContainer}>
+                    <ButtonPrimary>Donate</ButtonPrimary>
+                  </div>
+                </form>
             </div>
-          </form>
+          )}
+
           <div className={styles.signUpContainer}></div>
         </div>
       </div>
