@@ -21,6 +21,7 @@ const GET_CUSTOMER = gql`
       donations {
         amount
         date
+        restaurant_name
       }
     }
   }
@@ -66,6 +67,7 @@ function main() {
             <div className={styles.finalContainer}>
               <p className={styles.a}>${donation.amount}</p>
               <p className={styles.a}>{parseDate(donation.date)}</p>
+              <p className={styles.a}>{donation.restaurant_name}</p>
             </div>
           ))}
         </div>
