@@ -32,6 +32,10 @@ function main() {
     variables: { id: data.id },
   });
 
+  const parseDate = (date) => {
+    return date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6, 8);
+  };
+
   console.log(dataSecond);
 
   if (loading) return null;
@@ -61,7 +65,7 @@ function main() {
           {dataSecond.customer.donations.map((donation) => (
             <div className={styles.finalContainer}>
               <p className={styles.a}>${donation.amount}</p>
-              <p className={styles.a}>{donation.date}</p>
+              <p className={styles.a}>{parseDate(donation.date)}</p>
             </div>
           ))}
         </div>

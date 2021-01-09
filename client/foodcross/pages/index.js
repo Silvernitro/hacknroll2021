@@ -17,6 +17,7 @@ const GET_RESTAURANTS = gql`
       name
       location
       balance
+      profile_pic
     }
   }
 `;

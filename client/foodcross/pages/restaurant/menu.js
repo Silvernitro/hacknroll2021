@@ -3,7 +3,7 @@ import styles from "../../styles/Menu.module.css";
 import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "components/Button/ButtonPrimary";
 import { useMutation } from "@apollo/react-hooks";
-import Navbar from "components/Navbar/NavbarDonations";
+import Navbar from "components/Navbar/NavbarRestaurant";
 
 import { gql, useQuery } from "@apollo/client";
 
