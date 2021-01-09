@@ -66,8 +66,8 @@ function main() {
           {dataSecond.customer.donations.map((donation) => (
             <div className={styles.finalContainer}>
               <p className={styles.a}>${donation.amount}</p>
-              <p className={styles.a}>{parseDate(donation.date)}</p>
               <p className={styles.a}>{donation.restaurant_name}</p>
+              <p className={styles.a}>{parseDate(donation.date)}</p>
             </div>
           ))}
         </div>
